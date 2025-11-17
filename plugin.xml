@@ -4,42 +4,27 @@
         version="1.0.0">
 
     <name>cordova-plugin-signicat</name>
+
     <js-module name="Signicat" src="www/signicat.js">
         <clobbers target="Signicat"/>
     </js-module>
 
-
     <platform name="android">
-
-        <!-- Include the "android-sdk-${version}.aar" library in your project-->
         <framework src="src/android/android-sdk-1.0.0.aar" custom="true" type="aar" />
-
-        <source-file
-            src="src/android/SignicatPlugin.java"
-            target-dir="src/com/signicat/plugin" />
-
-        <!-- It's A Java based Android application so we need the following dependency -->
-        <framework src="org.jetbrains.kotlin:kotlin-stdlib:1.3.50" />
-
-        
+        <source-file src="src/android/SignicatPlugin.java" target-dir="src/com/signicat/plugin" />
     </platform>
 
-
     <platform name="ios">
-
-        <!-- Include the "ios-sdk-${version}" library in your project -->
         <framework src="src/ios/ios-sdk-1.0.0.xcframework" custom="true" embed="true" />
-
         <header-file src="src/ios/SignicatPlugin.h" />
         <source-file src="src/ios/SignicatPlugin.m" />
 
         <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
             <array>
+                <string>connectis</string>
                 <string>signicat</string>
-                <string>signicatio</string>
             </array>
         </config-file>
-
     </platform>
 
 </plugin>
