@@ -16,7 +16,6 @@
     </js-module>
 
     <platform name="android">
-        <source-file src="src/android/libs/android-sdk-1.1.5.aar" target-dir="libs" />
         <!-- include the "android-sdk-1.1.5.aar" library -->
         <!-- <framework src="src/android/build.gradle" custom="true" type="gradleReference"/>-->
         <!--<framework src="src/android/android-sdk-1.1.5.aar" custom="true" type="aar" />-->
@@ -48,4 +47,5 @@
     </platform>
 
 </plugin>
+
 
