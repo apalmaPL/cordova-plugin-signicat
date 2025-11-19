@@ -8,11 +8,11 @@ dependencies {
    implementation(name:'android-sdk-1.1.5', ext:'aar')
 }
 
-
 android {
     defaultConfig {
         manifestPlaceholders = [
-            appAuthRedirectScheme: "app.outsystems.sallanddev.AdrianoSandbox" 
+            appAuthRedirectScheme: "https"
         ]
     }
 }
+
