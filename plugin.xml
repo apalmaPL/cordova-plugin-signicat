@@ -11,8 +11,8 @@
 
     <engines>
         <engine name="cordova" version=">=9.0.0" />
-        <engine name="cordova-android" version=">=10.0.0" />
-        <engine name="cordova-ios" version=">=5.0.0" />
+        <engine name="cordova-android" version=">=13.0.0" />
+        <engine name="cordova-ios" version=">=7.1.0" />
     </engines>
     
     <platform name="android">
@@ -105,6 +105,7 @@
     </platform>
 
 </plugin>
+
 
 
 
