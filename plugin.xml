@@ -9,6 +9,12 @@
         <clobbers target="Signicat" />
     </js-module>
 
+    <engines>
+        <engine name="cordova" version=">=9.0.0" />
+        <engine name="cordova-android" version=">=10.0.0" />
+        <engine name="cordova-ios" version=">=5.0.0" />
+    </engines>
+    
     <platform name="android">
         
         <source-file src="src/android/libs/android-sdk-1.1.5.aar" target-dir="app/libs" />
@@ -99,6 +105,7 @@
     </platform>
 
 </plugin>
+
 
 
 
