@@ -16,12 +16,72 @@
     </js-module>
 
     <platform name="android">
-        <!-- include the "android-sdk-1.1.5.aar" library -->
-        <!-- <framework src="src/android/build.gradle" custom="true" type="gradleReference"/>-->
-        <!--<framework src="src/android/android-sdk-1.1.5.aar" custom="true" type="aar" />-->
         <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
-        <!-- <framework src="org.jetbrains.kotlin:kotlin-stdlib:1.3.50" /> -->
         <source-file src="src/android/SignicatPlugin.java" target-dir="src/com/signicat/plugin" />
+
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest">
+    
+                <activity
+                        android:exported="true"
+                        android:name="com.connectis.sdk.api.authentication.AppResponseActivity"
+                        android:windowSoftInputMode="stateHidden">
+                        <intent-filter android:autoVerify="true">
+                            <action android:name="android.intent.action.VIEW" />
+                        
+                            <category android:name="android.intent.category.DEFAULT" />
+                            <category android:name="android.intent.category.BROWSABLE" />
+                        
+                            <data
+                                android:scheme="https"
+                                android:host="pkio.broker.ng-test.nl"
+                                android:pathPrefix="/broker/app/oidc/response" />
+                        </intent-filter>
+                </activity>
+                        
+                <activity
+                        android:exported="true"
+                        android:name="com.connectis.sdk.api.authentication.digid.DigidResponseActivity"
+                        android:windowSoftInputMode="stateHidden">
+                        <intent-filter android:autoVerify="true">
+                            <action android:name="android.intent.action.VIEW" />
+                        
+                            <category android:name="android.intent.category.DEFAULT" />
+                            <category android:name="android.intent.category.BROWSABLE" />
+                        
+                            <data
+                                android:scheme="https"
+                                android:host="pkio.broker.ng-test.nl"
+                                android:pathPrefix="/broker/authn/digid/digid-app" />
+                        </intent-filter>
+                </activity>
+                        
+                <activity
+                        android:exported="true"
+                        android:name="net.openid.appauth.RedirectUriReceiverActivity"
+                        tools:node="replace">
+                        <intent-filter android:autoVerify="true">
+                            <action android:name="android.intent.action.VIEW" />
+                        
+                            <category android:name="android.intent.category.DEFAULT" />
+                            <category android:name="android.intent.category.BROWSABLE" />
+                        
+                            <data
+                                android:scheme="https"
+                                android:host="pkio.broker.ng-test.nl"
+                                android:pathPrefix="/broker/app/redirect/response" />
+                        </intent-filter>
+                        <intent-filter>
+                            <action android:name="android.intent.action.VIEW" />
+                        
+                            <category android:name="android.intent.category.DEFAULT" />
+                            <category android:name="android.intent.category.BROWSABLE" />
+                        
+                            <data android:scheme="com.connectis.mobile"/>
+                        </intent-filter>
+                </activity>
+        
+        </edit-config>
+            
     </platform>
 
     <platform name="ios">
@@ -47,5 +107,6 @@
     </platform>
 
 </plugin>
+
 
 
