@@ -1,6 +1,6 @@
 repositories {
     flatDir {
-        dirs '${projectDir}/../../../../plugins/cordova-plugin-signicat/src/android/libs'
+        dirs "${projectDir}/../../../../plugins/cordova-plugin-signicat/src/android/libs"
     }
 }
 
