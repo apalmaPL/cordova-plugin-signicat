@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="cordova-plugin-signicat"
-        version="1.0.0">
+    id="cordova-plugin-signicat"
+    version="1.0.0">
 
     <name>cordova-plugin-signicat</name>
 
     <engines>
-        <engine name="cordova" version=">=9.0.0"/>
-        <engine name="cordova-android" version=">=10.0.0"/>
-        <engine name="cordova-ios" version=">=5.0.0"/>
+        <engine name="cordova" version=">=9.0.0" />
+        <engine name="cordova-android" version=">=10.0.0" />
+        <engine name="cordova-ios" version=">=5.0.0" />
     </engines>
-        
+
     <js-module name="Signicat" src="www/signicat.js">
-        <clobbers target="Signicat"/>
+        <clobbers target="Signicat" />
     </js-module>
 
     <platform name="android">
@@ -20,94 +20,87 @@
         <source-file src="src/android/SignicatPlugin.java" target-dir="src/com/signicat/plugin" />
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-    
+            <application xmlns:tools="http://schemas.android.com/tools">
                 <activity
-                        android:exported="true"
-                        android:name="com.connectis.sdk.api.authentication.AppResponseActivity"
-                        android:windowSoftInputMode="stateHidden">
-                        <intent-filter android:autoVerify="true">
-                            <action android:name="android.intent.action.VIEW" />
-                        
-                            <category android:name="android.intent.category.DEFAULT" />
-                            <category android:name="android.intent.category.BROWSABLE" />
-                        
-                            <data
-                                android:scheme="https"
-                                android:host="pkio.broker.ng-test.nl"
-                                android:pathPrefix="/broker/app/oidc/response" />
-                        </intent-filter>
+                    android:exported="true"
+                    android:name="com.connectis.sdk.api.authentication.AppResponseActivity"
+                    android:windowSoftInputMode="stateHidden">
+                    <intent-filter android:autoVerify="true">
+                        <action android:name="android.intent.action.VIEW" />
+                        <category android:name="android.intent.category.DEFAULT" />
+                        <category android:name="android.intent.category.BROWSABLE" />
+
+                        <data
+                            android:scheme="https"
+                            android:host="pkio.broker.ng-test.nl"
+                            android:pathPrefix="/broker/app/oidc/response" />
+                    </intent-filter>
                 </activity>
-                        
+
                 <activity
-                        android:exported="true"
-                        android:name="com.connectis.sdk.api.authentication.digid.DigidResponseActivity"
-                        android:windowSoftInputMode="stateHidden">
-                        <intent-filter android:autoVerify="true">
-                            <action android:name="android.intent.action.VIEW" />
-                        
-                            <category android:name="android.intent.category.DEFAULT" />
-                            <category android:name="android.intent.category.BROWSABLE" />
-                        
-                            <data
-                                android:scheme="https"
-                                android:host="pkio.broker.ng-test.nl"
-                                android:pathPrefix="/broker/authn/digid/digid-app" />
-                        </intent-filter>
+                    android:exported="true"
+                    android:name="com.connectis.sdk.api.authentication.digid.DigidResponseActivity"
+                    android:windowSoftInputMode="stateHidden">
+                    <intent-filter android:autoVerify="true">
+                        <action android:name="android.intent.action.VIEW" />
+                        <category android:name="android.intent.category.DEFAULT" />
+                        <category android:name="android.intent.category.BROWSABLE" />
+
+                        <data
+                            android:scheme="https"
+                            android:host="pkio.broker.ng-test.nl"
+                            android:pathPrefix="/broker/authn/digid/digid-app" />
+                    </intent-filter>
                 </activity>
-                        
+
                 <activity
-                        android:exported="true"
-                        android:name="net.openid.appauth.RedirectUriReceiverActivity"
-                        tools:node="replace">
-                        <intent-filter android:autoVerify="true">
-                            <action android:name="android.intent.action.VIEW" />
-                        
-                            <category android:name="android.intent.category.DEFAULT" />
-                            <category android:name="android.intent.category.BROWSABLE" />
-                        
-                            <data
-                                android:scheme="https"
-                                android:host="pkio.broker.ng-test.nl"
-                                android:pathPrefix="/broker/app/redirect/response" />
-                        </intent-filter>
-                        <intent-filter>
-                            <action android:name="android.intent.action.VIEW" />
-                        
-                            <category android:name="android.intent.category.DEFAULT" />
-                            <category android:name="android.intent.category.BROWSABLE" />
-                        
-                            <data android:scheme="com.connectis.mobile"/>
-                        </intent-filter>
+                    android:exported="true"
+                    android:name="net.openid.appauth.RedirectUriReceiverActivity"
+                    tools:node="replace">
+                    <intent-filter android:autoVerify="true">
+                        <action android:name="android.intent.action.VIEW" />
+                        <category android:name="android.intent.category.DEFAULT" />
+                        <category android:name="android.intent.category.BROWSABLE" />
+
+                        <data
+                            android:scheme="https"
+                            android:host="pkio.broker.ng-test.nl"
+                            android:pathPrefix="/broker/app/redirect/response" />
+                    </intent-filter>
+                    <intent-filter>
+                        <action android:name="android.intent.action.VIEW" />
+
+                        <category android:name="android.intent.category.DEFAULT" />
+                        <category android:name="android.intent.category.BROWSABLE" />
+
+                        <data android:scheme="com.connectis.mobile" />
+                    </intent-filter>
                 </activity>
-        
+            </application>
         </edit-config>
-            
+
     </platform>
 
     <platform name="ios">
         <framework src="src/ios/ConnectisSDK.framework" custom="true" embed="true" />
-        
+
         <header-file src="src/ios/SignicatPlugin.h" />
         <source-file src="src/ios/SignicatPlugin.m" />
-        
+
         <!-- Required for app-to-app flows like DigiD -->
         <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
-                <array>
-                    <string>connectis</string>
-                    <string>digid</string>
-                </array>
+            <array>
+                <string>connectis</string>
+                <string>digid</string>
+            </array>
         </config-file>
-        
+
         <!-- Allow universal links if used -->
         <config-file target="*-Info.plist" parent="com.apple.developer.associated-domains">
-                <array>
-                    <string>applinks:your-domain.com</string>
-                </array>
+            <array>
+                <string>applinks:your-domain.com</string>
+            </array>
         </config-file>
     </platform>
 
 </plugin>
-
-
-
-
