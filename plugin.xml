@@ -19,7 +19,7 @@
         <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
         <source-file src="src/android/SignicatPlugin.java" target-dir="src/com/signicat/plugin" />
 
-        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest">
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
     
                 <activity
                         android:exported="true"
@@ -107,6 +107,7 @@
     </platform>
 
 </plugin>
+
 
 
 
