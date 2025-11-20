@@ -11,7 +11,8 @@ dependencies {
 android {
     defaultConfig {
         manifestPlaceholders = [
-            appAuthRedirectScheme: "https"
+            appAuthRedirectScheme: "https",
+            appAuthRedirectHost: "salland-dev.outsystems.app"
         ]
     }
 }
