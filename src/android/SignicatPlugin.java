@@ -16,7 +16,7 @@ import com.connectis.sdk.AccessTokenDelegate;
 
 
 public class SignicatPlugin extends CordovaPlugin {
-/**
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
             throws JSONException {
@@ -118,7 +118,7 @@ public class SignicatPlugin extends CordovaPlugin {
         callbackContext.success("deviceAuthDisabled");
     }
 
-**/
+
 }
 
 
