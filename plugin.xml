@@ -83,6 +83,9 @@
     </platform>
 
     <platform name="ios">
+
+        <preference name="deployment-target" value="12.0" />
+        
         <framework src="src/ios/ConnectisSDK.framework" custom="true" embed="true" />
 
         <header-file src="src/ios/SignicatPlugin.h" />
@@ -109,6 +112,7 @@
     </platform>
 
 </plugin>
+
 
 
 
