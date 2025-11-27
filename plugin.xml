@@ -83,6 +83,26 @@
     </platform>
 
     <platform name="ios">
+
+
+            <!-- Force iOS 12+ -->
+        <preference name="deployment-target" value="12.0" />
+    
+        <!-- Required when your plugin or any SDK requires Swift -->
+        <preference name="UseSwiftLanguageVersion" value="5" />
+    
+        <!-- Remove Cordova’s override that triggers CocoaPods warnings -->
+        <edit-config target="ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES"
+                     file="*-Info.plist"
+                     mode="remove" />
+    
+        <!-- Ensure runpath search paths are inherited instead of overridden -->
+        <edit-config file="project.pbxproj"
+                     target="LD_RUNPATH_SEARCH_PATHS"
+                     mode="overwrite">
+            <string>$(inherited)</string>
+        </edit-config>
+
         
         <framework src="src/ios/ConnectisSDK.framework" custom="true" embed="true" />
 
@@ -110,6 +130,7 @@
     </platform>
 
 </plugin>
+
 
 
 
