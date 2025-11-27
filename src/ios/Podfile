@@ -1,0 +1,26 @@
+platform :ios, '12.0'
+use_frameworks! :linkage => :static
+
+target '$(PROJECT_NAME)' do
+    # If your SDK is delivered as a Cocoapod
+    # pod 'ConnectisSDK', '1.1.5'
+
+    # If SDK is *not* a pod and is instead included manually,
+    # leave this empty.
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      # force iOS 12 for ALL pods
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+
+      # ensure Swift version
+      config.build_settings['SWIFT_VERSION'] = '5.0'
+
+      # avoid override warnings
+      config.build_settings['ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES'] = '$(inherited)'
+      config.build_settings['LD_RUNPATH_SEARCH_PATHS'] = '$(inherited)'
+    end
+  end
+end
