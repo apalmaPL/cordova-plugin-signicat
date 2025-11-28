@@ -1,9 +1,6 @@
 #import "Foundation/Foundation.h"
 #import "Cordova/CDV.h"
 
-
-@class ConnectisSDKConfiguration;
-
 @interface SignicatPlugin : CDVPlugin
 
 - (void)login:(CDVInvokedUrlCommand*)command;
