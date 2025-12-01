@@ -2,7 +2,6 @@
 #import "SignicatPlugin.h"
 #import <ConnectisSDK/ConnectisSDK.h>
 #import <ConnectisSDK/ConnectisSDK-Swift.h>
-#import com.connectis.sdk.api.configuration.ConnectisSDKConfiguration
 
 
 
