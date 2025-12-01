@@ -84,6 +84,34 @@
 
     <platform name="ios">
 
+
+        <framework src="src/ios/ConnectisSDK.framework" custom="true" embed="true" />
+    
+        <source-file src="src/ios/SignicatPlugin.swift" />
+    
+        <preference name="UseSwiftLanguageVersion" value="6.0" />
+    
+        <!-- Ensure Swift version is set in generated xcconfigs -->
+        <config-file target="*-Debug.xcconfig" parent="SWIFT_VERSION">
+            <string>6.0</string>
+        </config-file>
+        <config-file target="*-Release.xcconfig" parent="SWIFT_VERSION">
+            <string>6.0</string>
+        </config-file>
+    
+        <!-- Ensure Swift runtime embedding -->
+        <config-file target="project.pbxproj" parent="ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES">
+            <string>YES</string>
+        </config-file>
+    
+        <!-- Correct runpath so embedded frameworks load -->
+        <config-file target="project.pbxproj" parent="LD_RUNPATH_SEARCH_PATHS">
+            <string>$(inherited) @executable_path/Frameworks</string>
+        </config-file>
+
+
+        
+        <!--
         <source-file src="src/ios/Dummy.swift" />
         <framework src="src/ios/ConnectisSDK.framework" custom="true" embed="true" />
         <preference name="UseSwiftLanguageVersion" default="6.0" />
@@ -135,6 +163,7 @@
     </platform>
 
 </plugin>
+
 
 
 
