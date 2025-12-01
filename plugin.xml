@@ -89,11 +89,11 @@
     
         <source-file src="src/ios/SignicatPlugin.swift" />
     
-        <preference name="UseSwiftLanguageVersion" value="6.0" />
             
     </platform>
 
 </plugin>
+
 
 
 
