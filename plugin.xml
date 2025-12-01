@@ -112,11 +112,15 @@
         <config-file target="project.pbxproj" parent="LD_RUNPATH_SEARCH_PATHS">
             <string>$(inherited) @executable_path/Frameworks</string>
         </config-file>
-        
+
+        <pods use-frameworks="true">
+            <pod name="AppAuth" />
+        </pods>
         
     </platform>
 
 </plugin>
+
 
 
 
