@@ -112,11 +112,21 @@
         <config-file target="project.pbxproj" parent="LD_RUNPATH_SEARCH_PATHS">
             <string>$(inherited) @executable_path/Frameworks</string>
         </config-file>-->
-        <framework src="AppAuth" type="podspec" spec="~> 1.3.0"/>
+
+        <podspec>
+             <config>
+                 <source url="https://github.com/CocoaPods/Specs.git"/>
+             </config>
+             <pods use-frameworks="true">
+                 <pod name="AppAuth" spec="~> 1.3.0" />
+             </pods>
+        </podspec>
+
         
     </platform>
 
 </plugin>
+
 
 
 
