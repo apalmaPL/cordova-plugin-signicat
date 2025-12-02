@@ -1,0 +1,11 @@
+framework module ConnectisSDK {
+  umbrella header "ConnectisSDK.h"
+  export *
+
+  module * { export * }
+}
+
+module ConnectisSDK.Swift {
+  header "ConnectisSDK-Swift.h"
+  requires objc
+}

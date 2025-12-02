@@ -1,0 +1,79 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name ConnectisSDK
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AppAuth
+@_exported import ConnectisSDK
+import Foundation
+import LocalAuthentication
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import os.log
+import os
+public struct ConnectisConstants {
+}
+@objc @_inheritsConvenienceInitializers open class ConnectisSDK : ObjectiveC.NSObject {
+  open class func logIn(sdkConfiguration: ConnectisSDK.ConnectisSDKConfiguration, caller: UIKit.UIViewController, delegate: any ConnectisSDK.AuthenticationResponseDelegate, allowDeviceAuthentication: Swift.Bool = false, errorResponseDelegate: (any ConnectisSDK.ErrorResponseDelegate)? = nil)
+  open class func continueLogin(userActivity: Foundation.NSUserActivity) -> Swift.Bool
+  open class func enableDeviceAuthentication(delegate: any ConnectisSDK.DeviceAuthenticationResponseDelegate)
+  open class func disableDeviceAuthentication() -> Swift.Bool
+  open class func isDeviceAuthenticationEnabled() -> Swift.Bool
+  open class func useAccessToken(caller: UIKit.UIViewController, delegate: any ConnectisSDK.AccessTokenDelegate)
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol DeviceAuthenticationResponseDelegate : AnyObject {
+  func onSuccess()
+  func onError(errorMessage: Swift.String)
+}
+public struct ConnectisSDKConfiguration {
+  public var issuer: Swift.String
+  public var clientID: Swift.String
+  public var redirectURI: Swift.String
+  public var scopes: Swift.String?
+  public var brokerAppAcs: Swift.String?
+  public var brokerDigidAppAcs: Swift.String?
+  public var loginFlow: ConnectisSDK.LoginFlow
+  public init(issuer: Swift.String, clientID: Swift.String, redirectURI: Swift.String, scopes: Swift.String?, brokerAppAcs: Swift.String? = nil, brokerDigidAppAcs: Swift.String? = nil, loginFlow: ConnectisSDK.LoginFlow = LoginFlow.WEB)
+}
+public enum LoginFlow {
+  case WEB
+  case APP_TO_APP
+  public static func == (a: ConnectisSDK.LoginFlow, b: ConnectisSDK.LoginFlow) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol ErrorResponseDelegate : AnyObject {
+  func onError(errorMessage: Swift.String)
+}
+public struct Attribute {
+  public var name: Swift.String
+  public var value: Swift.String
+}
+public struct AuthenticationResponse {
+  public var isSuccess: Swift.Bool
+  public var error: (any Swift.Error)?
+  public var nameIdentifier: Swift.String?
+  public var attributes: [ConnectisSDK.Attribute]?
+}
+public protocol AccessTokenDelegate : AnyObject {
+  func handleAccessToken(accessToken: ConnectisSDK.Token)
+  func onError(errorMessage: Swift.String)
+}
+public protocol AuthenticationResponseDelegate : AnyObject {
+  func handleResponse(authenticationResponse: ConnectisSDK.AuthenticationResponse)
+  func onCancel()
+}
+public struct Token : Swift.Codable {
+  public func getValue() -> Swift.String
+  public func getExpirationTime() -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension ConnectisSDK.LoginFlow : Swift.Equatable {}
+extension ConnectisSDK.LoginFlow : Swift.Hashable {}
