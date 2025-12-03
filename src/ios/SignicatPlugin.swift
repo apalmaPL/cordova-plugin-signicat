@@ -10,6 +10,8 @@ class SignicatPlugin: CDVPlugin {
         
     }
 
-
+    private func enableDeviceAuthentication() {
+        ConnectisSDK.enableDeviceAuthentication(delegate: self)
+    }
 }
 
