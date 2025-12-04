@@ -2,6 +2,8 @@ import Foundation
 import ConnectisSDK
 
 
+
+
 @objc(SignicatPlugin)
 class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
 
@@ -34,20 +36,11 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
             loginFlow: LoginFlow.APP_TO_APP
         )
 
-        let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-            switch action.style{
-                case .default:
-                print("default")
-                
-                case .cancel:
-                print("cancel")
-                
-                case .destructive:
-                print("destructive")
-                
-            }
-        }))
+
+        let alert = UIAlertController(title: "LoginAppToApp", message: "This is my message.", preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
         self.present(alert, animated: true, completion: nil)
 
         
