@@ -8,6 +8,22 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
 
     private var currentCommand: CDVInvokedUrlCommand?
 
+
+    @MainActor
+    private func showAlert(title: String, message: String) {
+        guard let vc = self.viewController else { return }
+
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        vc.present(alert, animated: true)
+    }
+
+
     @objc(loginAppToApp:)
     @MainActor
     func loginAppToApp(command: CDVInvokedUrlCommand) {
@@ -108,16 +124,3 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
 }
 
 
-@MainActor
-private func showAlert(title: String, message: String) {
-    guard let vc = self.viewController else { return }
-
-    let alert = UIAlertController(
-        title: title,
-        message: message,
-        preferredStyle: .alert
-    )
-
-    alert.addAction(UIAlertAction(title: "OK", style: .default))
-    vc.present(alert, animated: true)
-}
