@@ -102,4 +102,18 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
         self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
         self.currentCommand = nil
     }
+
+    func showAlert(title: String, message: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(
+                title: title,
+                message: message,
+                preferredStyle: .alert
+            )
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.viewController?.present(alert, animated: true, completion: nil)
+        }
+    }
 }
