@@ -3,11 +3,7 @@ import ConnectisSDK
 
 
 class SignicatPlugin: CDVPlugin {
-
     
-    func wtf() {
-        var isDeviceAuthEnabled = ConnectisSDK.isDeviceAuthenticationEnabled()
-    }
 
     func loginAppToApp() {
 
@@ -28,8 +24,31 @@ class SignicatPlugin: CDVPlugin {
             brokerDigidAppAcs: brokerDigidAppAcs,
             loginFlow: LoginFlow.APP_TO_APP)
         
-        
+        ConnectisSDK.logIn(sdkConfiguration: configuration, caller: self, delegate: AuthenticationResponseDelegate, allowDeviceAuthentication: ConnectisSDK.isDeviceAuthenticationEnabled())
     }
     
+
+    public protocol AuthenticationResponseDelegate: class {
+        func handleResponse(authenticationResponse: AuthenticationResponse)
+        func onCancel()
+    }
+
+    public struct AuthenticationResponse {
+        public var isSuccess: Bool
+        public var error: Error?
+        public var nameIdentifier: String?
+        public var attributes: [Attribute]?
+    }
+
+
+    func handleResponse(authenticationResponse: AuthenticationResponse) {
+
+    }
+    
+    func onCancel() {
+
+    }
+
+
 }
 
