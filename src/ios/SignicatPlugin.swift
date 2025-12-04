@@ -1,6 +1,6 @@
 import Foundation
 import ConnectisSDK
-import Cordova
+
 
 @objc(SignicatPlugin)
 class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
