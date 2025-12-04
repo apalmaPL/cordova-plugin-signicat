@@ -36,7 +36,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
             loginFlow: LoginFlow.APP_TO_APP
         )
 
-        self.showAlert(title: "Login", message: "Login App-to-App triggered")
+        self.showAlert(title: "Login", message: "Login App-to-App triggered!")
 
         ConnectisSDK.logIn(
             sdkConfiguration: configuration,
