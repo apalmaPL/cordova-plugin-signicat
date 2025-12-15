@@ -82,7 +82,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
 
     func handleResponse(authenticationResponse: AuthenticationResponse) {
 
-        showAlert("Success", "Login response!")
+        showAlert(title:"Success", message:"Login response!")
 
         guard let command = currentCommand else { return }
 
