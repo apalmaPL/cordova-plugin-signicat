@@ -82,8 +82,6 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
 
     func handleResponse(authenticationResponse: AuthenticationResponse) {
 
-        showAlert(title:"Success", message:"Login response!")
-
         guard let command = currentCommand else { return }
 
 
@@ -125,6 +123,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
         self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
         self.currentCommand = nil
     }
+
 
     func onCancel() {
 

@@ -16,7 +16,9 @@ module.exports = {
     brokerDigidAppAcs
   ) {
     exec(
-      null,
+      function (result) {
+                     self.alert("Success:\r\r" + result.status);
+                 },
       null,
       "Signicat",
       "loginAppToApp",
