@@ -13,18 +13,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
     @MainActor
     func loginAppToApp(command: CDVInvokedUrlCommand) {
 
-        let toastController: UIAlertController =
-            UIAlertController(
-            title: "WOOOOW!",
-            message: "Login app2app executed!",
-            preferredStyle: .alert
-            )
-
-        self.viewController?.present(
-            toastController,
-            animated: true,
-            completion: nil
-        )
+        showMessage(messageIn: "loginAppToApp")
 
         self.currentCommand = command
 /*
@@ -80,6 +69,8 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
 
     func handleResponse(authenticationResponse: AuthenticationResponse) {
 
+        showMessage(messageIn: "handleResponse")
+
         guard let command = currentCommand else { return }
 
 
@@ -125,6 +116,8 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
 
     func onCancel() {
 
+        showMessage(messageIn: "onCancel")
+
         guard let command = currentCommand else { return }
 
         let pluginResult = CDVPluginResult(
@@ -136,6 +129,30 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
         self.currentCommand = nil
     }
 
+
+    func showMessage(messageIn: String){
+
+        let toastController: UIAlertController =
+            UIAlertController(
+            title: "WOOOOW!",
+            message: messageIn,
+            preferredStyle: .alert
+            )
+
+        toastController.addAction(UIAlertAction(
+            title: "OK", 
+            style: .default, 
+            handler: { _ in 
+                print("OK tap") 
+            }))
+
+        self.viewController?.present(
+            toastController,
+            animated: true,
+            completion: nil
+        )
+
+    }
 
 }
 
