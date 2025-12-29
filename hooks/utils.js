@@ -30,7 +30,7 @@ function readFile(filePath) {
 
 function indexReplacer(indexPath, content) {
 
-    content = content.replace('<script type="text/javascript" src="scripts/cordova.js', '<script>function handleOpenURL(url) {console.log(url);alert(url);}</script><script type="text/javascript" src="scripts/cordova.js');
+    content = content.replace('<script type="text/javascript" src="scripts/cordova.js', '<script>function handleOpenURL(url) {console.log(url);}</script><script type="text/javascript" src="scripts/cordova.js');
     console.log('Added openURLhandler JS function.')
 
     fs.writeFileSync(indexPath, content, "utf-8");
