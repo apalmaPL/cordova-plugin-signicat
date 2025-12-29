@@ -9,15 +9,13 @@ const configs = {
     androidMainPath: "/platforms/android/app/src/main/",
     androidAppPath: "/platforms/android/app/",
     configPathAndroid: "/platforms/android/app/src/main/res/xml/config.xml",
-    configPathIos: "/platforms/ios/PLUS/config.xml",
+    configPathIos: "/platforms/ios/MijnSalland/config.xml",
     androidManifest: "AndroidManifest.xml",
     iosPath: "/platforms/ios/www/",
     iosMainPath: "/platforms/ios/",
     errorFile: '_error.html',
     indexFile: 'index.html',
-    urlPath: 'ECOP_Mobile',
-    notificareSuffix: '.notificare',
-    firebaseSuffix: '.firebase',
+    urlPath: 'MijnSalland',
     pluginId: 'cordova-os-build-changer'
 };
 
@@ -35,10 +33,8 @@ function indexReplacer(indexPath, content) {
     content = content.replace('<script type="text/javascript" src="scripts/cordova.js', '<script>window.handleOpenURL = function(url) {alert(url);}</script><script type="text/javascript" src="scripts/cordova.js');
     console.log('Added openURLhandler JS function.')
 
-
     fs.writeFileSync(indexPath, content, "utf-8");
 }
-
 
 
 module.exports = {
