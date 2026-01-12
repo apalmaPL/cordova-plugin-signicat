@@ -3,8 +3,13 @@
         dirs "${projectDir}/libs"
     }
 }
+*/
 
+dependencies {
+   implementation fileTree(dir: "libs", include: ["*.aar"])
+}
 
+/*
 dependencies {
    implementation(name:'android-sdk-1.1.7', ext:'aar')
 }
