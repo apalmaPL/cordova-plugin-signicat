@@ -61,7 +61,7 @@ public class SignicatPlugin extends CordovaPlugin {
                 redirectUri,
                 scopes,
                 brokerDigidAppAcs,
-                LoginFlow.APP_TO_APP
+                loginFlow = LoginFlow.APP_TO_APP
             );
 
 
@@ -70,20 +70,24 @@ public class SignicatPlugin extends CordovaPlugin {
                     configuration,
                     activity,
 
-                    // Success callback
-                    (Function1<AuthenticationResponse, Unit>) response -> {
-                        callbackContext.success("Signicat login successful");
-                        return Unit.INSTANCE;
+                    // Success delegate
+                    new AuthenticationResponseDelegate() {
+                        @Override
+                        public void onSuccess(AuthenticationResponse response) {
+                            callbackContext.success("Signicat login successful");
+                        }
                     },
 
-                    // allowDeviceAuthentication
-                    ConnectisSDK.isDeviceAuthenticationEnabled(activity),
-
-                    // Error callback
-                    (Function1<ErrorResponse, Unit>) error -> {
-                        callbackContext.error("Signicat login failed");
-                        return Unit.INSTANCE;
-                    }
+                    // Error delegate
+                    new ErrorResponseDelegate() {
+                        @Override
+                        public void onError(ErrorResponse error) {
+                            callbackContext.error("Signicat login failed");
+                        }
+                    },
+                    
+                    // Allow device authentication
+                    ConnectisSDK.isDeviceAuthenticationEnabled(activity)
                 );
             });
                 
@@ -93,31 +97,9 @@ public class SignicatPlugin extends CordovaPlugin {
         }
     }
 
-    private void getAccessToken(CallbackContext callbackContext) {
-        ConnectisSDK.getOpenIdAccessToken(new AccessTokenDelegate() {
-            @Override
-            public void onToken(String token) {
-                callbackContext.success(token);
-            }
-
-            @Override
-            public void onError(Exception e) {
-                callbackContext.error("AccessToken error: " + e.getMessage());
-            }
-        });
-    }
-
-    private void enableDeviceAuth(CallbackContext callbackContext) {
-        ConnectisSDK.enableDeviceAuthentication();
-        callbackContext.success("deviceAuthEnabled");
-    }
-
-    private void disableDeviceAuth(CallbackContext callbackContext) {
-        ConnectisSDK.disableDeviceAuthentication();
-        callbackContext.success("deviceAuthDisabled");
-    }
-
 
 }
 
-
+    private void SuccessCallback() {
+        callbackContext.success("Signicat login successful");
+    }
