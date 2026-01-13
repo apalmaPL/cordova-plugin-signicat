@@ -100,7 +100,3 @@ public class SignicatPlugin extends CordovaPlugin {
 
 
 }
-
-    private void SuccessCallback() {
-        callbackContext.success("Signicat login successful");
-    }
