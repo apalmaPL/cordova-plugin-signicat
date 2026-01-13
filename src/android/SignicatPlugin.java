@@ -29,15 +29,6 @@ public class SignicatPlugin extends CordovaPlugin {
             case "login":
                 login(args, callbackContext);
                 return true;
-            case "getAccessToken":
-                getAccessToken(callbackContext);
-                return true;
-            case "enableDeviceAuth":
-                enableDeviceAuth(callbackContext);
-                return true;
-            case "disableDeviceAuth":
-                disableDeviceAuth(callbackContext);
-                return true;
             default:
                 return false;
         }
@@ -54,6 +45,7 @@ public class SignicatPlugin extends CordovaPlugin {
             String scopes = args.getString(3);
             String brokerDigidAppAcs = args.getString(4);
             boolean allowDeviceAuthentication = false;
+            LoginFlow loginFlow = LoginFlow.APP_TO_APP;
 
 
             ConnectisSDKConfiguration configuration = new ConnectisSDKConfiguration(
@@ -62,32 +54,28 @@ public class SignicatPlugin extends CordovaPlugin {
                 redirectUri,
                 scopes,
                 brokerDigidAppAcs,
-                loginFlow = LoginFlow.APP_TO_APP
+                loginFlow
             );
 
+            AuthenticationResponseDelegate delegate = new AuthenticationResponseDelegate() {
+
+                @Override
+                public void onSuccess() {
+                    callbackContext.success("Signicat login successful");
+                }
+
+                @Override
+                public void onCancel() {
+                    callbackContext.error("Signicat login cancelled");
+                }
+            }
 
             activity.runOnUiThread(() -> {
                 ConnectisSDK.login(
                     configuration,
                     activity,
-
-                    // Success delegate
-                    new AuthenticationResponseDelegate() {
-                        @Override
-                        public void onSuccess(AuthenticationResponse response) {
-                            callbackContext.success("Signicat login successful");
-                        }
-                    },
-
-                    // Error delegate
-                    new ErrorResponseDelegate() {
-                        @Override
-                        public void onError(ErrorResponse error) {
-                            callbackContext.error("Signicat login failed");
-                        }
-                    },
-                    
-                    // Don't allow device authentication
+                    delegate,
+                    null,
                     allowDeviceAuthentication 
                 );
             });
