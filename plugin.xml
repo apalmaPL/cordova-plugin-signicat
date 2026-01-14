@@ -26,7 +26,7 @@
             </style>
         </config-file>
 
-        <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:name='com.outsystems.android.MainActivity']">
+        <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:name='nl.salland.mijn.dev.MainActivity']">
             <attribute name="android:theme" value="@style/SignicatAppCompatTheme" />
         </config-file>
 
