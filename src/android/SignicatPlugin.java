@@ -74,6 +74,8 @@ public class SignicatPlugin extends CordovaPlugin {
             };
             
 
+            callbackContext.error("BADRUZ");
+
             activity.runOnUiThread(() -> {
                 ConnectisSDK.Companion.login(
                     configuration,
