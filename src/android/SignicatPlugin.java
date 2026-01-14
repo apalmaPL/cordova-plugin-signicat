@@ -59,7 +59,7 @@ public class SignicatPlugin extends CordovaPlugin {
                 LoginFlow.APP_TO_APP
             );
             
-callbackContext.error("BADRUZ2");
+
             AuthenticationResponseDelegate delegate = new AuthenticationResponseDelegate() {
 
                 @Override
@@ -74,7 +74,6 @@ callbackContext.error("BADRUZ2");
             };
             
 
-callbackContext.error("BADRUZ");
 
             activity.runOnUiThread(() -> {
                 ConnectisSDK.Companion.login(
