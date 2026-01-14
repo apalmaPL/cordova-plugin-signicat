@@ -1,20 +1,4 @@
-/*repositories {
-    flatDir {
-        dirs "${projectDir}/libs"
-    }
-}
-*/
 
-dependencies {
-    implementation fileTree(dir: "libs", include: ["*.aar"])
-    implementation "androidx.browser:browser:1.9.0"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.7"
-    implementation "com.google.code.gson:gson:2.13.2"
-    implementation "net.openid:appauth:0.11.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1"
-}
-
-/*
 dependencies {
             implementation fileTree(dir: "libs", include: ["*.aar"])
             // BEGIN Earlier embedded into connectis SDK
@@ -27,7 +11,7 @@ dependencies {
             implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1"
             // END Earlier embedded into connectis SDK
         }
-*/
+
 
 android {
     defaultConfig {
