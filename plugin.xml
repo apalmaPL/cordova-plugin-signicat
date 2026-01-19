@@ -50,6 +50,33 @@
             </activity>
         </config-file>
 
+        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application"></config-file>
+            <activity
+                android:exported="true"
+                android:name="net.openid.appauth.RedirectUriReceiverActivity"
+                tools:node="replace">
+                <intent-filter android:autoVerify="true">
+                    <action android:name="android.intent.action.VIEW" />
+
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.BROWSABLE" />
+
+                    <data
+                        android:scheme="https"
+                        android:host="testpilot.hollandzorg.com"
+                        android:pathPrefix="/MijnSalland/Redirect" />
+                </intent-filter>
+                <intent-filter>
+                    <action android:name="android.intent.action.VIEW" />
+
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.BROWSABLE" />
+
+                    <data android:scheme="com.connectis.mobile"/>
+                </intent-filter>
+            </activity>
+        </config-file>
+
         <source-file src="src/android/libs/android-sdk-1.1.7.aar" target-dir="app/libs" />
         <source-file src="src/android/SignicatPlugin.java" target-dir="src/com/signicat/plugin" />
         <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
