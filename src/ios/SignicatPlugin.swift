@@ -35,7 +35,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
 
         let result = CDVPluginResult(
             status: CDVCommandStatus_OK,
-            messageAs: Token.value
+            messageAs: accessToken.getValue()
         )
         self.commandDelegate.send(
             result,
