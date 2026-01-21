@@ -10,7 +10,7 @@ import com.connectis.sdk.api.authentication.AuthenticationResponse;
 import com.connectis.sdk.api.authentication.AuthenticationResponseDelegate;
 import com.connectis.sdk.api.authentication.ErrorResponseDelegate;
 import com.connectis.sdk.internal.authentication.login.LoginFlow;
-import com.connectis.sdk.api.delegate.AccessTokenDelegate;
+import com.connectis.sdk.api.authentication.AccessTokenDelegate;
 import org.jetbrains.annotations.NotNull;
 
 
