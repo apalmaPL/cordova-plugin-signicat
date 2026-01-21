@@ -11,6 +11,7 @@ import com.connectis.sdk.api.authentication.AuthenticationResponseDelegate;
 import com.connectis.sdk.api.authentication.ErrorResponseDelegate;
 import com.connectis.sdk.internal.authentication.login.LoginFlow;
 import com.connectis.sdk.api.authentication.AccessTokenDelegate;
+import com.connectis.sdk.api.authentication.Token;
 import org.jetbrains.annotations.NotNull;
 
 
