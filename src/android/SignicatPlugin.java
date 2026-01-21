@@ -36,13 +36,13 @@ public class SignicatPlugin extends CordovaPlugin {
             cordova.getActivity(),
             new AccessTokenDelegate() {
                 @Override
-                public void handleAccessToken(@NotNull String accessToken) {
-                    callbackContext.success(accessToken);
+                public void handleAccessToken(@NotNull Token accessToken) {
+                    callbackContext.success(accessToken.getValue());
                 }
 
                 @Override
-                public void handleError(@NotNull Exception exception) {
-                    callbackContext.error(exception.getMessage());
+                public void onError(@NotNull String exception) {
+                    callbackContext.error(exception);
                 }
             }
         );
