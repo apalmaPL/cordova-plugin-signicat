@@ -5,9 +5,58 @@ import UIKit
 
 
 @objc(SignicatPlugin)
-class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate {
+class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDelegate  {
 
     private var currentCommand: CDVInvokedUrlCommand?
+    private var accessTokenCallbackId: String?
+
+    @objc(getAccessToken:)
+    @MainActor
+    func getAccessToken(command: CDVInvokedUrlCommand) {
+
+        self.accessTokenCallbackId = command.callbackId
+
+        guard let viewController = self.viewController else {
+            let result = CDVPluginResult(
+                status: CDVCommandStatus_ERROR,
+                messageAs: "No UIViewController available"
+            )
+            self.commandDelegate.send(result, callbackId: command.callbackId)
+            return
+        }
+
+        ConnectisSDK.shared.useAccessToken(
+            caller: viewController,
+            delegate: self
+        )
+    }
+
+    func handleAccessToken(accessToken: Token) {
+
+        let result = CDVPluginResult(
+            status: CDVCommandStatus_OK,
+            messageAs: accessToken.value
+        )
+        self.commandDelegate.send(
+            result,
+            callbackId: self.accessTokenCallbackId
+        )
+
+    }
+
+    func onError(errorMessage: String) {
+
+        let result = CDVPluginResult(
+            status: CDVCommandStatus_ERROR,
+            messageAs: errorMessage
+        )
+        self.commandDelegate.send(
+            result,
+            callbackId: self.accessTokenCallbackId
+        )
+
+    }
+
 
     @objc(loginAppToApp:)
     @MainActor

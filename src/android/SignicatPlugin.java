@@ -10,6 +10,9 @@ import com.connectis.sdk.api.authentication.AuthenticationResponse;
 import com.connectis.sdk.api.authentication.AuthenticationResponseDelegate;
 import com.connectis.sdk.api.authentication.ErrorResponseDelegate;
 import com.connectis.sdk.internal.authentication.login.LoginFlow;
+import com.connectis.sdk.api.delegate.AccessTokenDelegate;
+import org.jetbrains.annotations.NotNull;
+
 
 public class SignicatPlugin extends CordovaPlugin {
 
@@ -19,8 +22,32 @@ public class SignicatPlugin extends CordovaPlugin {
             login(args, callbackContext);
             return true;
         }
+
+        if ("getAccessToken".equals(action)) {
+            getAccessToken(callbackContext);
+            return true;
+        }
+
         return false;
     }
+
+    private void getAccessToken(final CallbackContext callbackContext) {
+        ConnectisSDK.Companion.useAccessToken(
+            cordova.getActivity(),
+            new AccessTokenDelegate() {
+                @Override
+                public void handleAccessToken(@NotNull String accessToken) {
+                    callbackContext.success(accessToken);
+                }
+
+                @Override
+                public void handleError(@NotNull Exception exception) {
+                    callbackContext.error(exception.getMessage());
+                }
+            }
+        );
+    }
+
 
     private void login(JSONArray args, CallbackContext callbackContext) {
 
