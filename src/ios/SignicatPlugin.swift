@@ -15,22 +15,13 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
     func getAccessToken(command: CDVInvokedUrlCommand) {
 
         self.accessTokenCallbackId = command.callbackId
-        let result = CDVPluginResult(
-            status: CDVCommandStatus_OK,
-            messageAs: "oi oi oi"
-        )
 
         showMessage(messageIn: "getAccessToken")
 
-        self.commandDelegate.send(
-            result,
-            callbackId: self.accessTokenCallbackId
-        )
-        /*
         ConnectisSDK.useAccessToken(
             caller: self.viewController,
             delegate: self
-        )*/
+        )
 
     }
 
