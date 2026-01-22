@@ -78,7 +78,6 @@
             <feature name="Signicat">
                 <param name="ios-package" value="SignicatPlugin" />
             </feature>
-            <!--<preference name="SwiftVersion" value="6.2.1" />-->
             <preference name="SwiftVersion" value="5" />
         </config-file>
         

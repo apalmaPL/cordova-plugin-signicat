@@ -33,6 +33,8 @@ public class SignicatPlugin extends CordovaPlugin {
     }
 
     private void getAccessToken(final CallbackContext callbackContext) {
+        callbackContext.success("Whaaat!?");
+        /*
         ConnectisSDK.Companion.useAccessToken(
             cordova.getActivity(),
             new AccessTokenDelegate() {
@@ -46,7 +48,7 @@ public class SignicatPlugin extends CordovaPlugin {
                     callbackContext.error(exception);
                 }
             }
-        );
+        );*/
     }
 
 
