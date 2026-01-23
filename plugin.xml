@@ -31,16 +31,6 @@
             </activity>
         </config-file>
 
-        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
-            <activity android:exported="true" android:name="com.connectis.sdk.internal.authentication.login.LoginActivity" android:theme="@style/Theme.Cordova.App.DayNight">
-                <intent-filter android:autoVerify="true">
-                    <action android:name="android.intent.action.VIEW" />
-                    <category android:name="android.intent.category.DEFAULT" />
-                    <category android:name="android.intent.category.BROWSABLE" />
-                    <data android:host="testpilot.hollandzorg.com" android:pathPrefix="/MijnSalland/Redirect" android:scheme="https" />
-                </intent-filter>
-            </activity>
-        </config-file>
 
 
         <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
@@ -60,6 +50,17 @@
 
 
 <!--
+        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
+            <activity android:exported="true" android:name="com.connectis.sdk.internal.authentication.login.LoginActivity" android:theme="@style/Theme.Cordova.App.DayNight">
+                <intent-filter android:autoVerify="true">
+                    <action android:name="android.intent.action.VIEW" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.BROWSABLE" />
+                    <data android:host="testpilot.hollandzorg.com" android:pathPrefix="/MijnSalland/Redirect" android:scheme="https" />
+                </intent-filter>
+            </activity>
+        </config-file>
+
         <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
             <activity android:exported="true" android:name="net.openid.appauth.RedirectUriReceiverActivity" android:theme="@style/Theme.Cordova.App.DayNight">
                 <intent-filter android:autoVerify="true">
