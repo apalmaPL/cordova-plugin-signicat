@@ -44,7 +44,7 @@
 
 
         <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
-            <activity android:name="com.connectis.sdk.api.authentication.AppResponseActivity" android:exported="true">
+            <activity android:name="com.connectis.sdk.api.authentication.AppResponseActivity" android:exported="true" android:theme="@style/Theme.Cordova.App.DayNight">
                 <intent-filter android:autoVerify="true">
                     <action android:name="android.intent.action.VIEW" />
                     <category android:name="android.intent.category.DEFAULT" />
