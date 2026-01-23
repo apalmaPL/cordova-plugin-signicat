@@ -31,8 +31,6 @@
             </activity>
         </config-file>
 
-
-
         <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
             <activity android:name="com.connectis.sdk.api.authentication.AppResponseActivity" android:exported="true" android:theme="@style/Theme.Cordova.App.DayNight">
                 <intent-filter android:autoVerify="true">
@@ -46,10 +44,12 @@
         </config-file>
 
         <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
-            <activity android:exported="true" android:name="com.connectis.sdk.internal.authentication.login.LoginActivity" android:theme="@style/Theme.Cordova.App.DayNight">
-            </activity>
+            <activity android:name="com.connectis.sdk.internal.authentication.login.LoginActivity" android:theme="@style/Theme.Cordova.App.DayNight"></activity>
         </config-file>
 
+        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="net.openid.appauth.AuthorizationManagementActivity" android:theme="@style/Theme.Cordova.App.DayNight"></activity>
+        </config-file>
 
 
 <!--
