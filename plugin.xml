@@ -31,6 +31,21 @@
             </activity>
         </config-file>
 
+
+
+        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.connectis.sdk.internal.authentication.login.LoginActivity" android:theme="@style/Theme.Cordova.App.DayNight"></activity>
+        </config-file>
+
+        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="net.openid.appauth.AuthorizationManagementActivity" android:theme="@style/Theme.Cordova.App.DayNight"></activity>
+        </config-file>
+
+
+
+
+<!--
+
         <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
             <activity android:name="com.connectis.sdk.api.authentication.AppResponseActivity" android:exported="true" android:theme="@style/Theme.Cordova.App.DayNight">
                 <intent-filter android:autoVerify="true">
@@ -42,17 +57,7 @@
                 </intent-filter>
             </activity>
         </config-file>
-
-        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
-            <activity android:name="com.connectis.sdk.internal.authentication.login.LoginActivity" android:theme="@style/Theme.Cordova.App.DayNight"></activity>
-        </config-file>
-
-        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
-            <activity android:name="net.openid.appauth.AuthorizationManagementActivity" android:theme="@style/Theme.Cordova.App.DayNight"></activity>
-        </config-file>
-
-
-<!--
+        
         <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
             <activity android:exported="true" android:name="com.connectis.sdk.internal.authentication.login.LoginActivity" android:theme="@style/Theme.Cordova.App.DayNight">
                 <intent-filter android:autoVerify="true">
@@ -94,7 +99,10 @@
             </activity>
         </config-file>
 
-        
+        <activity android:name="net.openid.appauth.AuthorizationManagementActivity" android:launchMode="singleInstance" tools:node="replace"/>
+        <activity android:name="com.connectis.sdk.internal.authentication.login.LoginActivity" android:launchMode="singleInstance" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name="com.connectis.sdk.internal.authentication.device.authentication.DeviceAuthenticationActivity" android:windowSoftInputMode="stateHidden"/>
+
 -->
         <source-file src="src/android/libs/android-sdk-1.1.7.aar" target-dir="app/libs" />
         <source-file src="src/android/SignicatPlugin.java" target-dir="src/com/signicat/plugin" />
