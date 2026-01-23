@@ -29,6 +29,6 @@ module.exports = {
     exec(successHandler,errorHandler,"Signicat","loginAppToApp",[issuer,clientID,redirectURI,appToAppScopes,brokerDigidAppAcs]);
   },
   getAccessToken: function (success,error) {
-      exec(success,error,"Signicat","getAccessToken",[]);
+    exec(success,error,"Signicat","getAccessToken",[]);
   },
 };
