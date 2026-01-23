@@ -26,7 +26,7 @@
                     <action android:name="android.intent.action.VIEW" />
                     <category android:name="android.intent.category.DEFAULT" />
                     <category android:name="android.intent.category.BROWSABLE" />
-                    <data android:host="testpilot.hollandzorg.com" android:pathPrefix="/MijnSalland/Redirect" android:scheme="https" />
+                    <data android:host="testpilot.hollandzorg.com" android:pathPrefix="/broker/authn/digid/digid-app" android:scheme="https" />
                 </intent-filter>
             </activity>
         </config-file>
@@ -42,27 +42,48 @@
             </activity>
         </config-file>
         <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
-            <activity android:exported="true" android:name="net.openid.appauth.AuthorizationManagementActivity" android:theme="@style/Theme.Cordova.App.DayNight">
+            <activity android:exported="true" android:name="net.openid.appauth.RedirectUriReceiverActivity" android:theme="@style/Theme.Cordova.App.DayNight">
                 <intent-filter android:autoVerify="true">
                     <action android:name="android.intent.action.VIEW" />
                     <category android:name="android.intent.category.DEFAULT" />
                     <category android:name="android.intent.category.BROWSABLE" />
-                    <data android:host="testpilot.hollandzorg.com" android:pathPrefix="/MijnSalland/Redirect" android:scheme="https" />
+                    <data
+                        android:scheme="https" android:host="testpilot.hollandzorg.com" android:pathPrefix="/broker/app/redirect/response" />
+                </intent-filter>
+
+                <intent-filter>
+                    <action android:name="android.intent.action.VIEW" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.BROWSABLE" />
+                    <data android:scheme="com.connectis.mobile" />
+                </intent-filter>
+            </activity>
+        </config-file>
+        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.connectis.sdk.api.authentication.AppResponseActivity" android:exported="true">
+                <intent-filter android:autoVerify="true">
+                    <action android:name="android.intent.action.VIEW" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.BROWSABLE" />
+                    <data
+                        android:scheme="https" android:host="testpilot.hollandzorg.com" android:pathPrefix="/broker/app/oidc/response" />
                 </intent-filter>
             </activity>
         </config-file>
 
 
 
+
+
 <!--
 
         <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
-            <activity android:exported="true" android:name="net.openid.appauth.RedirectUriReceiverActivity" android:theme="@style/Theme.Cordova.App.DayNight">
+            <activity android:exported="true" android:name="net.openid.appauth.AuthorizationManagementActivity" android:theme="@style/Theme.Cordova.App.DayNight">
                 <intent-filter android:autoVerify="true">
                     <action android:name="android.intent.action.VIEW" />
                     <category android:name="android.intent.category.DEFAULT" />
                     <category android:name="android.intent.category.BROWSABLE" />
-                    <data android:scheme="https" android:host="testpilot.hollandzorg.com" android:pathPrefix="/MijnSalland/Redirect" />
+                    <data android:host="testpilot.hollandzorg.com" android:pathPrefix="/MijnSalland/Redirect" android:scheme="https" />
                 </intent-filter>
             </activity>
         </config-file>
