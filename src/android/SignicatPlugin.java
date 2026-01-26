@@ -82,7 +82,7 @@ public class SignicatPlugin extends CordovaPlugin {
                 scopes,
                 null,
                 brokerDigidAppAcs,
-                LoginFlow.APP_TO_APP
+                LoginFlow.WEB
             );
         
             AuthenticationResponseDelegate delegate = new AuthenticationResponseDelegate() {
