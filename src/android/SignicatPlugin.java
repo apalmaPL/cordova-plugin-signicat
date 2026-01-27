@@ -91,7 +91,7 @@ public class SignicatPlugin extends CordovaPlugin {
             AuthenticationResponseDelegate delegate = new AuthenticationResponseDelegate() {
               @Override
               public void handleResponse(AuthenticationResponse response) {
-                callbackContext.success(response);
+                callbackContext.success(response.toString());
               }
         
               @Override
