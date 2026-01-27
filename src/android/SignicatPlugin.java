@@ -67,7 +67,8 @@ public class SignicatPlugin extends CordovaPlugin {
             redirectUri = args.getString(2);
             scopes = args.getString(3);
             brokerDigidAppAcs = args.getString(4);
-            isAppToApp = args.getBoolean(5);
+            isAppToApp = args.optBoolean(5, false);
+
         } catch (JSONException e) {
             callbackContext.error("Invalid args: " + e.getMessage());
             return;

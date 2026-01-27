@@ -99,7 +99,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
             redirectURI: redirectURI,
             scopes: appToAppScopes,
             brokerDigidAppAcs: brokerDigidAppAcs,
-            loginFlow: if(isAppToApp) { LoginFlow.APP_TO_APP } else { LoginFlow.WEB } 
+            loginFlow: isAppToApp ? LoginFlow.APP_TO_APP : LoginFlow.WEB
         )
 
 
