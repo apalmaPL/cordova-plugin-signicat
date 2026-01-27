@@ -79,7 +79,8 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
             let clientID = command.arguments[1] as? String,
             let redirectURI = command.arguments[2] as? String,
             let appToAppScopes = command.arguments[3] as? String,
-            let brokerDigidAppAcs = command.arguments[4] as? String
+            let brokerDigidAppAcs = command.arguments[4] as? String,
+            let isAppToApp = command.arguments[5] as? Bool
         else {
             let result = CDVPluginResult(
                 status: CDVCommandStatus_ERROR,
@@ -90,13 +91,15 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
         }
 
 
+
+
         let configuration = ConnectisSDKConfiguration(
             issuer: issuer,
             clientID: clientID,
             redirectURI: redirectURI,
             scopes: appToAppScopes,
             brokerDigidAppAcs: brokerDigidAppAcs,
-            loginFlow: LoginFlow.APP_TO_APP
+            loginFlow: if(isAppToApp) { LoginFlow.APP_TO_APP } else { LoginFlow.WEB } 
         )
 
 

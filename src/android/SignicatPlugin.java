@@ -59,6 +59,7 @@ public class SignicatPlugin extends CordovaPlugin {
         final String redirectUri;
         final String scopes;
         final String brokerDigidAppAcs;
+        final boolean isAppToApp;
 
         try {
             issuer = args.getString(0);
@@ -66,6 +67,7 @@ public class SignicatPlugin extends CordovaPlugin {
             redirectUri = args.getString(2);
             scopes = args.getString(3);
             brokerDigidAppAcs = args.getString(4);
+            isAppToApp = args.getBoolean(5);
         } catch (JSONException e) {
             callbackContext.error("Invalid args: " + e.getMessage());
             return;
@@ -82,13 +84,13 @@ public class SignicatPlugin extends CordovaPlugin {
                 scopes,
                 null,
                 brokerDigidAppAcs,
-                LoginFlow.WEB
+                (isAppToApp) ? LoginFlow.APP_TO_APP : LoginFlow.WEB
             );
         
             AuthenticationResponseDelegate delegate = new AuthenticationResponseDelegate() {
               @Override
               public void handleResponse(AuthenticationResponse response) {
-                callbackContext.success("Signicat login successful");
+                callbackContext.success(response);
               }
         
               @Override

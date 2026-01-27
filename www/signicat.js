@@ -16,7 +16,7 @@ window.handleOpenURL = function(url) {
 
 
 module.exports = {
-  login: function (issuer,clientID,redirectURI,appToAppScopes,brokerDigidAppAcs) {
+  login: function (issuer,clientID,redirectURI,appToAppScopes,brokerDigidAppAcs,isAppToApp) {
 
     let successHandler = function (result) {
       self.alert("Success:\r\r" + result.status);
@@ -26,7 +26,7 @@ module.exports = {
       self.alert("Error:\r\r" + error);
     }
 
-    exec(successHandler,errorHandler,"Signicat","loginAppToApp",[issuer,clientID,redirectURI,appToAppScopes,brokerDigidAppAcs]);
+    exec(successHandler,errorHandler,"Signicat","loginAppToApp",[issuer,clientID,redirectURI,appToAppScopes,brokerDigidAppAcs,isAppToApp]);
   },
   getAccessToken: function (success,error) {
     exec(success,error,"Signicat","getAccessToken",[]);
