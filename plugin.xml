@@ -127,9 +127,7 @@
         <!--
         <source-file src="src/ios/AppDelegate+ConnectisHook.m" />
         <source-file src="src/ios/ConnectisBridge.swift" />
-        -->
-
-        <source-file src="src/ios/AppDelegate.swift" />
+        <source-file src="src/ios/AppDelegate.swift" />-->
 
         <config-file target="*-info.plist" parent="com.apple.developer.associated-domains"> 
             <array> 
