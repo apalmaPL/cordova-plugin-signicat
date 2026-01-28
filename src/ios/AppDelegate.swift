@@ -12,7 +12,7 @@ class MyCustomAppDelegate: AppDelegate {
     }
     
     override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        NSLog("BADRUZ!");
+        NSLog("APPDELEGATE2!");
         return true
     }
 
