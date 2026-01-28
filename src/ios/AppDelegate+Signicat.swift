@@ -1,7 +1,6 @@
 import Foundation
 import ConnectisSDK
 import UIKit
-import Cordova
 
 extension AppDelegate {
 
