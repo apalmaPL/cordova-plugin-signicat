@@ -103,7 +103,7 @@ public class SignicatPlugin extends CordovaPlugin {
             ErrorResponseDelegate errorDelegate = new ErrorResponseDelegate() {
               @Override
               public void handleError(Exception e) {
-                callbackContext.error(e.getMessage());
+                callbackContext.error("errorDelegate: " + e.getMessage());
               }
             };
         
