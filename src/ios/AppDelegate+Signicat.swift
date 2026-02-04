@@ -1,7 +1,7 @@
 import Foundation
 import ConnectisSDK
 import UIKit
-import CDVPlugin
+
 
 
 @objc(AppDelegate_Signicat)
