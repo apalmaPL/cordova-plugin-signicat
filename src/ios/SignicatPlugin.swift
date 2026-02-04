@@ -121,7 +121,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
 
         showMessage(messageIn: "Step2")
 
-        let responseStr = String(authenticationResponse) 
+        let responseStr = authenticationResponse.nameIdentifier
 
         let pluginResult = CDVPluginResult(
             status: CDVCommandStatus_OK,
@@ -169,7 +169,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
 
         self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
         self.currentCommand = nil
-        */
+ */
     }
 
 
