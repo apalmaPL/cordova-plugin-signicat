@@ -128,8 +128,8 @@
         </config-file>
         <!--
         <source-file src="src/ios/AppDelegate+ConnectisHook.m" />
-        <source-file src="src/ios/ConnectisBridge.swift" />
-        <source-file src="src/ios/AppDelegate+Signicat.swift" />-->
+        <source-file src="src/ios/ConnectisBridge.swift" />-->
+        <source-file src="src/ios/AppDelegate+Signicat.swift" />
 
         <config-file target="*-info.plist" parent="com.apple.developer.associated-domains"> 
             <array> 
