@@ -7,7 +7,7 @@ import UIKit
 extension CDVAppDelegate {
 
     @objc(application:continueUserActivity:restorationHandler:)
-    override open func application(_ application: UIApplication,
+    public func application(_ application: UIApplication,
                                    continue userActivity: NSUserActivity,
                                    restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
 
@@ -24,7 +24,7 @@ extension CDVAppDelegate {
     }
 
     @objc(application:openURL:options:)
-    override open func application(_ app: UIApplication,
+    public func application(_ app: UIApplication,
                                    open url: URL,
                                    options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
 
@@ -33,4 +33,7 @@ extension CDVAppDelegate {
         return super.application(app, open: url, options: options)
     }
 }
+
+
+
 
