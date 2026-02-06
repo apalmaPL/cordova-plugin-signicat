@@ -10,6 +10,24 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
     private var currentCommand: CDVInvokedUrlCommand?
     private var accessTokenCallbackId: String?
 
+    
+    override func pluginInitialize() {
+        NotificationCenter.default.addObserver(
+          self,
+          selector: #selector(continueUserActivityHandler(_:)),
+          name: NSNotification.Name(rawValue: UIApplicationContinueUserActivity),
+          object: nil
+        )
+    }
+
+    @objc(continueUserActivityHandler:) func continueUserActivityHandler(_ notification: NSNotification) {
+        let userActivity = notification.object as! NSUserActivity
+        if ConnectisSDK.continueLogin(userActivity: userActivity) {
+            NSLog("[Signicat] continueLogin handled the URL")
+            return true
+        }
+    }
+
     @objc(getAccessToken:)
     @MainActor
     func getAccessToken(command: CDVInvokedUrlCommand) {
