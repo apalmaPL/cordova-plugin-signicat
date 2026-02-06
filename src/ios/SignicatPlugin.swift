@@ -24,7 +24,6 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
         let userActivity = notification.object as! NSUserActivity
         if ConnectisSDK.continueLogin(userActivity: userActivity) {
             NSLog("[Signicat] continueLogin handled the URL")
-            return true
         }
     }
 
