@@ -10,6 +10,23 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
     private var currentCommand: CDVInvokedUrlCommand?
     private var accessTokenCallbackId: String?
 
+    
+    override func pluginInitialize() {
+        NotificationCenter.default.addObserver(
+          self,
+          selector: #selector(continueUserActivityHandler(_:)),
+          name: Notification.Name(rawValue: "UIApplicationContinueUserActivity"),
+          object: nil
+        )
+    }
+
+    @objc(continueUserActivityHandler:) func continueUserActivityHandler(_ notification: NSNotification) {
+        let userActivity = notification.object as! NSUserActivity
+        if ConnectisSDK.continueLogin(userActivity: userActivity) {
+            NSLog("[Signicat] continueLogin handled the URL")
+        }
+    }
+
     @objc(getAccessToken:)
     @MainActor
     func getAccessToken(command: CDVInvokedUrlCommand) {
@@ -54,25 +71,10 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
     @MainActor
     func loginAppToApp(command: CDVInvokedUrlCommand) {
 
-        NSLog("BADRUZ!");
+        NSLog("loginAppToApp Started");
 
         self.currentCommand = command
-/*
-        /*Demo app default configuration*/
-        let issuer = "https://pkio.broker.ng-test.nl/broker/sp/oidc"
-        let clientID = "PRlEjCDjGEzzLimcNOYWnmxY4IWqRHe3"
-        let redirectURI = "https://pkio.broker.ng-test.nl/broker/app/redirect/response"
-        let appToAppScopes = "openid idp_scoping:https://was-preprod1.digid.nl/saml/idp/metadata_app"
-        let brokerDigidAppAcs = "https://pkio.broker.ng-test.nl/broker/authn/digid/digid-app-acs"
-        
-        /*APalma Signicat SDK - OIDC Client configuration */
-        let issuer = "https://preprodbroker.salland.nl/auth/open"
-        let clientID = "sandbox-victorious-chess-790"
-        let redirectURI = "https://salland-dev.outsystems.app/Adriano_Sandbox/Redirect"
-        let appToAppScopes = "openid profile"
-        let brokerDigidAppAcs = "https://preprodbroker.salland.nl/broker/authn/digid/acs"
 
-*/
         guard command.arguments.count >= 5,
             let issuer = command.arguments[0] as? String,
             let clientID = command.arguments[1] as? String,
@@ -127,46 +129,6 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
 
         self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
         self.currentCommand = nil
-/*
-
-        guard let nameId = authenticationResponse.nameIdentifier else {
-
-            if !authenticationResponse.isSuccess {
-                let errorMessage = authenticationResponse.error?.localizedDescription ?? "Unknown authentication error"
-
-                let pluginResult = CDVPluginResult(
-                    status: CDVCommandStatus_ERROR,
-                    messageAs: "Authentication error: \(errorMessage)"
-                )
-
-                self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
-                self.currentCommand = nil
-                return
-            }
-
-            let pluginResult = CDVPluginResult(
-                status: CDVCommandStatus_ERROR,
-                messageAs: "Authentication error"
-            )
-
-            self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
-            self.currentCommand = nil
-            return
-        }
-
-        let result: [String: Any] = [
-            "nameIdentifier": nameId,
-            "isSuccess": authenticationResponse.isSuccess
-        ]
-
-        let pluginResult = CDVPluginResult(
-            status: CDVCommandStatus_OK,
-            messageAs: result
-        )
-
-        self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
-        self.currentCommand = nil
- */
     }
 
 

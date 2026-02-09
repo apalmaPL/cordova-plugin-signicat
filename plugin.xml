@@ -8,10 +8,6 @@
     <js-module name="SignicatPlugin" src="www/signicat.js">
         <clobbers target="SignicatPlugin" />
     </js-module>
-
-
-    <!--<dependency id="cordova.plugin.trapeze" url="https://github.com/apalmaPL/trapeze-cordova-plugin.git"/>-->
-
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="SignicatPlugin">
@@ -71,55 +67,15 @@
         </config-file>
 
 
-<!--
-        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
-            <activity android:exported="true" android:name="com.connectis.sdk.api.authentication.digid.DigidResponseActivity" android:theme="@style/Theme.Cordova.App.DayNight">
-                <intent-filter android:autoVerify="true">
-                    <action android:name="android.intent.action.VIEW" />
-                    <category android:name="android.intent.category.DEFAULT" />
-                    <category android:name="android.intent.category.BROWSABLE" />
-                    <data android:host="preprodbroker.salland.nl" android:pathPrefix="/broker/authn/digid/digid-app" android:scheme="https"/>
-                </intent-filter>
-            </activity>
-        </config-file>
-
-        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
-            <activity android:name="com.connectis.sdk.api.authentication.AppResponseActivity" android:exported="true" android:theme="@style/Theme.Cordova.App.DayNight">
-                <intent-filter android:autoVerify="true">
-                    <action android:name="android.intent.action.VIEW" />
-                    <category android:name="android.intent.category.DEFAULT" />
-                    <category android:name="android.intent.category.BROWSABLE" />
-                    <data android:host="preprodbroker.salland.nl" android:pathPrefix="/broker/app/oidc/response" android:scheme="https"/>
-                </intent-filter>
-            </activity>
-        </config-file>
-
-        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
-            <activity android:exported="true" android:name="net.openid.appauth.RedirectUriReceiverActivity" android:theme="@style/Theme.Cordova.App.DayNight">
-                <intent-filter android:autoVerify="true">
-                    <action android:name="android.intent.action.VIEW" />
-                    <category android:name="android.intent.category.DEFAULT" />
-                    <category android:name="android.intent.category.BROWSABLE" />
-                    <data android:host="preprodbroker.salland.nl" android:pathPrefix="/broker/app/redirect/respons" android:scheme="https"/>
-                </intent-filter>
-
-                <intent-filter>
-                    <action android:name="android.intent.action.VIEW" />
-                    <category android:name="android.intent.category.DEFAULT" />
-                    <category android:name="android.intent.category.BROWSABLE" />
-                    <data android:scheme="com.connectis.mobile" />
-                </intent-filter>
-            </activity>
-        </config-file>
-
--->
         <source-file src="src/android/libs/android-sdk-1.1.7.aar" target-dir="app/libs" />
         <source-file src="src/android/SignicatPlugin.java" target-dir="src/com/signicat/plugin" />
         <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
     </platform>
 
     <platform name="ios">
-    
+
+        <dependency id="cordova-plugin-ios-app-delegate-events" url="https://github.com/psolipaPL/cordova-plugin-ios-app-delegate-events.git" />
+        
         <config-file target="config.xml" parent="/*">
             <feature name="SignicatPlugin">
                 <param name="ios-package" value="SignicatPlugin" />
@@ -152,9 +108,6 @@
 
 
         <framework src="src/ios/ConnectisSDK.framework" custom="true" embed="true" />
-        <!--<source-file src="src/ios/AppDelegate+Signicat.h" />
-        <source-file src="src/ios/AppDelegate+Signicat.m" />-->
-        <source-file src="src/ios/AppDelegate+Signicat.swift" />
         <source-file src="src/ios/SignicatPlugin.swift" />
         <source-file src="src/ios/Bridging-Header.h" />
 
@@ -166,9 +119,11 @@
                 <pod name="AppAuth" spec="~> 2.0.0" />
             </pods>
         </podspec>
-        
-        <hook type="after_prepare" src="hooks/buildChanger.js" />
-
     </platform>
 
 </plugin>
+
+
+
+
+
