@@ -23,6 +23,7 @@
                     <category android:name="android.intent.category.DEFAULT" />
                     <category android:name="android.intent.category.BROWSABLE" />
                     <data android:host="preprodbroker.salland.nl" android:pathPrefix="/broker/authn/digid/digid-app" android:scheme="https"/>
+                    <data android:host="broker.salland.nl" android:pathPrefix="/broker/authn/digid/digid-app" android:scheme="https"/>
                 </intent-filter>
             </activity>
         </config-file>
@@ -34,6 +35,7 @@
                     <category android:name="android.intent.category.DEFAULT" />
                     <category android:name="android.intent.category.BROWSABLE" />
                     <data android:host="preprodbroker.salland.nl" android:pathPrefix="/broker/app/oidc/response" android:scheme="https"/>
+                    <data android:host="broker.salland.nl" android:pathPrefix="/broker/app/oidc/response" android:scheme="https"/>
                 </intent-filter>
             </activity>
         </config-file>
@@ -46,6 +48,7 @@
                     <category android:name="android.intent.category.DEFAULT" />
                     <category android:name="android.intent.category.BROWSABLE" />
                     <data android:host="preprodbroker.salland.nl" android:pathPrefix="/broker/app/redirect/response" android:scheme="https"/>
+                    <data android:host="broker.salland.nl" android:pathPrefix="/broker/app/redirect/response" android:scheme="https"/>
                 </intent-filter>
 
                 <intent-filter>
@@ -85,24 +88,21 @@
 
         <config-file target="*-info.plist" parent="com.apple.developer.associated-domains"> 
             <array> 
-                <string>applinks:salproxy.product-league.com/</string>
-                <string>applinks:testpilot.hollandzorg.com/</string>
                 <string>applinks:preprodbroker.salland.nl/</string>
+                <string>applinks:broker.salland.nl/</string>
             </array> 
         </config-file> 
         <config-file target="*-Debug.plist" parent="com.apple.developer.associated-domains"> 
             <array> 
-                <string>applinks:salproxy.product-league.com/</string>
-                <string>applinks:testpilot.hollandzorg.com/</string>
                 <string>applinks:preprodbroker.salland.nl/</string>
+                <string>applinks:broker.salland.nl/</string>
             </array> 
         </config-file> 
 
         <config-file target="*-Release.plist" parent="com.apple.developer.associated-domains"> 
             <array> 
-                <string>applinks:salproxy.product-league.com/</string>
-                <string>applinks:testpilot.hollandzorg.com/</string>
                 <string>applinks:preprodbroker.salland.nl/</string>
+                <string>applinks:broker.salland.nl/</string>
             </array> 
         </config-file>
 
@@ -122,8 +122,3 @@
     </platform>
 
 </plugin>
-
-
-
-
-
