@@ -3,6 +3,7 @@ package com.signicat.plugin;
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import com.google.gson.Gson;
 
 import com.connectis.sdk.ConnectisSDK;
