@@ -131,7 +131,7 @@ public class SignicatPlugin extends CordovaPlugin {
             JSONObject errorJson = new JSONObject();
             errorJson.put("code", code);
             errorJson.put("message", message);
-            ctx.error(errorJson);
+            ctx.error(errorJson.toString());
         } catch (JSONException ignored) {
             ctx.error("{\"code\":\"" + code + "\",\"message\":\"" + message + "\"}");
         }
