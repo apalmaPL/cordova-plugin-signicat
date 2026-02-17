@@ -45,7 +45,7 @@ public class SignicatPlugin extends CordovaPlugin {
 
                 @Override
                 public void onError(@NotNull String exception) {
-                    callbackContext.error("Error:getAccessToken: " + exception);
+                    sendError(callbackContext, "E_ACCESS_TOKEN_EXCEPTION", exception);
                 }
             }
         );
@@ -71,7 +71,7 @@ public class SignicatPlugin extends CordovaPlugin {
             isAppToApp = args.optBoolean(5, false);
 
         } catch (JSONException e) {
-            callbackContext.error("Error:login:Invalid args: " + e.getMessage());
+            sendError(callbackContext, "E_LOGIN_INVALID_ARGS", e.getMessage());
             return;
         }
 
@@ -93,20 +93,20 @@ public class SignicatPlugin extends CordovaPlugin {
               @Override
               public void handleResponse(AuthenticationResponse response) {
                 Gson gson = new Gson();
-                String json = gson.toJson(response);
-                callbackContext.success(json);
+                String responseJSON = gson.toJson(response);
+                callbackContext.success(responseJSON);
               }
         
               @Override
               public void onCancel() {
-                callbackContext.error("Error:login:onCancel:Signicat login cancelled");
+                sendError(callbackContext, "E_LOGIN_CANCELED", "User canceled Signicat login");
               }
             };
         
             ErrorResponseDelegate errorDelegate = new ErrorResponseDelegate() {
               @Override
               public void handleError(Exception e) {
-                callbackContext.error("Error:login:errorDelegate: " + e.getMessage());
+                sendError(callbackContext, "E_LOGIN_SDK_ERROR", e.getMessage());
               }
             };
         
@@ -118,10 +118,22 @@ public class SignicatPlugin extends CordovaPlugin {
                 allowDeviceAuthentication
             );
           } catch (Exception e) {
-            callbackContext.error("Error:login:Login config error: " + e.getMessage());
+            sendError(callbackContext, "E_LOGIN_EXCEPTION", e.getMessage());
           }
         });
 
+    }
+
+    
+    private void sendError(CallbackContext ctx, String code, String message) {
+        try {
+            JSONObject errorJson = new JSONObject();
+            errorJson.put("code", code);
+            errorJson.put("message", message);
+            ctx.error(errorJson);
+        } catch (JSONException ignored) {
+            ctx.error("{\"code\":\"" + code + "\",\"message\":\"" + message + "\"}");
+        }
     }
 }
 
