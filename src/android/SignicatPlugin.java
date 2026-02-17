@@ -3,6 +3,7 @@ package com.signicat.plugin;
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
+import com.google.gson.Gson;
 
 import com.connectis.sdk.ConnectisSDK;
 import com.connectis.sdk.api.configuration.ConnectisSDKConfiguration;
@@ -70,7 +71,7 @@ public class SignicatPlugin extends CordovaPlugin {
             isAppToApp = args.optBoolean(5, false);
 
         } catch (JSONException e) {
-            callbackContext.error("Invalid args: " + e.getMessage());
+            callbackContext.error("Error:login:Invalid args: " + e.getMessage());
             return;
         }
 
@@ -91,19 +92,21 @@ public class SignicatPlugin extends CordovaPlugin {
             AuthenticationResponseDelegate delegate = new AuthenticationResponseDelegate() {
               @Override
               public void handleResponse(AuthenticationResponse response) {
-                callbackContext.success(response.toString());
+                Gson gson = new Gson();
+                String json = gson.toJson(response);
+                callbackContext.success(json);
               }
         
               @Override
               public void onCancel() {
-                callbackContext.error("Signicat login cancelled");
+                callbackContext.error("Error:login:onCancel:Signicat login cancelled");
               }
             };
         
             ErrorResponseDelegate errorDelegate = new ErrorResponseDelegate() {
               @Override
               public void handleError(Exception e) {
-                callbackContext.error("errorDelegate: " + e.getMessage());
+                callbackContext.error("Error:login:errorDelegate: " + e.getMessage());
               }
             };
         
@@ -115,7 +118,7 @@ public class SignicatPlugin extends CordovaPlugin {
                 allowDeviceAuthentication
             );
           } catch (Exception e) {
-            callbackContext.error("Login config error: " + e.getMessage());
+            callbackContext.error("Error:login:Login config error: " + e.getMessage());
           }
         });
 
