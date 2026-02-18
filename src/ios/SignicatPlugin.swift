@@ -144,7 +144,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
         do{
             // Manually build JSON dictionary
             var json: [String: Any] = [
-                "isSuccess": authenticationResponse.success
+                "isSuccess": authenticationResponse.isSuccess
             ]
 
             if let error = authenticationResponse.error {
@@ -161,7 +161,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
 
             // Convert attributes
             var attributesJson: [[String: Any]] = []
-            for attr in authenticationResponse.attributes {
+            for attr in authenticationResponse.attributes ?? [] {
                 attributesJson.append([
                     "name": attr.name,
                     "value": attr.value
