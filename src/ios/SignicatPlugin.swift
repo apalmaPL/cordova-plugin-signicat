@@ -141,25 +141,35 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
 
         guard let command = currentCommand else { return }
 
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+        // Build JSON manually since AuthenticationResponse is NOT Encodable
+        var json: [String: Any] = [
+            "isSuccess": authenticationResponse.success,
+            "error": authenticationResponse.error ?? NSNull(),
+            "nameIdentifier": authenticationResponse.nameIdentifier ?? NSNull()
+        ]
 
-        do {
-            let data = try encoder.encode(authenticationResponse)
-            let jsonString = String(data: data, encoding: .utf8) ?? "{}"
-
-            let pluginResult = CDVPluginResult(
-                status: CDVCommandStatus_OK,
-                messageAs: jsonString
-            )
-            self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
+        // Convert attributes to JSON array
+        let attributesJson = authenticationResponse.attributes.map { attr in
+            return [
+                "name": attr.name,
+                "value": attr.value
+            ]
         }
-        catch {
-            sendError("E_LOGIN_EXCEPTION", "Failed to encode AuthenticationResponse: \(error.localizedDescription)", callbackId: command.callbackId)
-        }
+        json["attributes"] = attributesJson
 
+        // Convert dictionary to JSON string
+        let jsonData = try? JSONSerialization.data(withJSONObject: json, options: [])
+        let jsonString = jsonData.flatMap { String(data: $0, encoding: .utf8) } ?? "{}"
+
+        let pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_OK,
+            messageAs: jsonString
+        )
+
+        self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
         self.currentCommand = nil
     }
+
 
 
     func onCancel() {
