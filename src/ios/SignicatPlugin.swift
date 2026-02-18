@@ -27,6 +27,18 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
         }
     }
 
+
+    /**
+    * Requests an OpenID Connect access token from the Signicat Identity Broker.
+    *
+    * On iOS the Mobile SDK exposes an API that returns a valid OpenID access
+    * token once the user has previously authenticated. This access token
+    * represents an OAuth2 authorization credential that you can use to call
+    * backend services on behalf of the authenticated user. Treat this token
+    * as a secret and never expose it to untrusted components.
+    *
+    */
+
     @objc(getAccessToken:)
     @MainActor
     func getAccessToken(command: CDVInvokedUrlCommand) {
@@ -54,18 +66,31 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
     }
 
     func onError(errorMessage: String) {
+        guard let callbackId = self.accessTokenCallbackId else { return }
 
-        let result = CDVPluginResult(
-            status: CDVCommandStatus_ERROR,
-            messageAs: errorMessage
-        )
-        self.commandDelegate.send(
-            result,
-            callbackId: self.accessTokenCallbackId
-        )
-
+        sendError("E_ACCESS_TOKEN_EXCEPTION", errorMessage, callbackId: callbackId)
     }
 
+
+
+    /**
+    * Initiates the Signicat Identity Broker authentication flow.
+    *
+    * On iOS the Mobile SDK’s `login` method takes a configuration object
+    * containing issuer, client ID, redirect URI and optional scopes.
+    * It opens a browser or app-to-app flow depending on configuration,
+    * and calls back into delegate methods when complete.
+    *
+    * The SDK supports:
+    *   • A WEB login flow — browser-based authentication with universal links.
+    *   • An APP_TO_APP flow — universal linking to an external identity app (Digid).
+    *
+    * The results are sent asynchronously:
+    *   • On success, `handleResponse(...)` receives an AuthenticationResponse.
+    *   • On cancel, `onCancel()` is invoked.
+    *   • SDK errors are returned via an error handler.
+    *
+    */
 
     @objc(loginAppToApp:)
     @MainActor
@@ -83,25 +108,24 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
             let brokerDigidAppAcs = command.arguments[4] as? String,
             let isAppToApp = command.arguments[5] as? Bool
         else {
-            let result = CDVPluginResult(
-                status: CDVCommandStatus_ERROR,
-                messageAs: "Missing or invalid parameters"
-            )
-            self.commandDelegate.send(result, callbackId: command.callbackId)
+            sendError("E_LOGIN_INVALID_ARGS", "Missing or invalid parameters", callbackId: command.callbackId)
             return
         }
 
-
-
-
-        let configuration = ConnectisSDKConfiguration(
-            issuer: issuer,
-            clientID: clientID,
-            redirectURI: redirectURI,
-            scopes: appToAppScopes,
-            brokerDigidAppAcs: brokerDigidAppAcs,
-            loginFlow: isAppToApp ? LoginFlow.APP_TO_APP : LoginFlow.WEB
-        )
+        let configuration: ConnectisSDKConfiguration
+        do {
+            configuration = ConnectisSDKConfiguration(
+                issuer: issuer,
+                clientID: clientID,
+                redirectURI: redirectURI,
+                scopes: appToAppScopes,
+                brokerDigidAppAcs: brokerDigidAppAcs,
+                loginFlow: isAppToApp ? LoginFlow.APP_TO_APP : LoginFlow.WEB
+            )
+        } catch {
+            sendError("E_LOGIN_CONFIG", "Invalid login configuration: \(error.localizedDescription)", callbackId: command.callbackId)
+            return
+        }
 
 
         ConnectisSDK.logIn(
@@ -115,34 +139,51 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
 
     func handleResponse(authenticationResponse: AuthenticationResponse) {
 
-
         guard let command = currentCommand else { return }
 
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
 
-        let responseStr = String(describing: authenticationResponse)
+        do {
+            let data = try encoder.encode(authenticationResponse)
+            let jsonString = String(data: data, encoding: .utf8) ?? "{}"
 
+            let pluginResult = CDVPluginResult(
+                status: CDVCommandStatus_OK,
+                messageAs: jsonString
+            )
+            self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
+        }
+        catch {
+            sendError("E_LOGIN_EXCEPTION", "Failed to encode AuthenticationResponse: \(error.localizedDescription)", callbackId: command.callbackId)
+        }
 
-        let pluginResult = CDVPluginResult(
-            status: CDVCommandStatus_OK,
-            messageAs: responseStr
-        )
-
-        self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
         self.currentCommand = nil
     }
 
 
     func onCancel() {
-
         guard let command = currentCommand else { return }
+
+        sendError("E_LOGIN_CANCELED", "User canceled login", callbackId: command.callbackId)
+
+        self.currentCommand = nil
+    }
+
+
+
+    func sendError(_ code: String, _ message: String, callbackId: String) {
+        let errorObj: [String: Any] = [
+            "code": code,
+            "message": message
+        ]
 
         let pluginResult = CDVPluginResult(
             status: CDVCommandStatus_ERROR,
-            messageAs: "Authentication was canceled!"
+            messageAs: errorObj
         )
 
-        self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
-        self.currentCommand = nil
+        self.commandDelegate.send(pluginResult, callbackId: callbackId)
     }
 
 
