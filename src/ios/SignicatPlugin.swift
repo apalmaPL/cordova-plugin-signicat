@@ -27,6 +27,26 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
         }
     }
 
+    func sendError(code: String, message: String, callbackId: String) {
+        let errorObj: [String: Any] = [
+            "code": code,
+            "message": message
+        ]
+
+        // Convert to JSON string safely
+        var jsonString = "{}"
+        if JSONSerialization.isValidJSONObject(errorObj),
+        let data = try? JSONSerialization.data(withJSONObject: errorObj, options: []) {
+            jsonString = String(data: data, encoding: .utf8) ?? "{}"
+        }
+
+        let pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_ERROR,
+            messageAs: jsonString
+        )
+
+        self.commandDelegate.send(pluginResult, callbackId: callbackId)
+    }
 
     /**
     * Requests an OpenID Connect access token from the Signicat Identity Broker.
@@ -66,9 +86,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
     }
 
     func onError(errorMessage: String) {
-        guard let callbackId = self.accessTokenCallbackId else { return }
-
-        sendError(code:"E_ACCESS_TOKEN_EXCEPTION", message:errorMessage, callbackId: callbackId)
+        sendError(code:"E_ACCESS_TOKEN_EXCEPTION", message:errorMessage, callbackId: self.accessTokenCallbackId)
     }
 
 
@@ -168,14 +186,14 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
                 ])
             }
             json["attributes"] = attributesJson
-            NSLog("loginAppToApp handleResponse2");
+
             // Convert to JSON string safely
             var jsonString = "{}"
             if JSONSerialization.isValidJSONObject(json),
             let data = try? JSONSerialization.data(withJSONObject: json, options: []) {
                 jsonString = String(data: data, encoding: .utf8) ?? "{}"
             }
-            NSLog("loginAppToApp " + jsonString);
+
             let pluginResult = CDVPluginResult(
                 status: CDVCommandStatus_OK,
                 messageAs: jsonString
@@ -199,22 +217,6 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
         sendError(code:"E_LOGIN_CANCELED", message:"User canceled login", callbackId: command.callbackId)
 
         self.currentCommand = nil
-    }
-
-
-
-    func sendError(code: String, message: String, callbackId: String) {
-        let errorObj: [String: Any] = [
-            "code": code,
-            "message": message
-        ]
-
-        let pluginResult = CDVPluginResult(
-            status: CDVCommandStatus_ERROR,
-            messageAs: errorObj
-        )
-
-        self.commandDelegate.send(pluginResult, callbackId: callbackId)
     }
 
 
