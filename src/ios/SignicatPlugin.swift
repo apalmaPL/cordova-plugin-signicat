@@ -143,7 +143,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
 
         // Build JSON manually since AuthenticationResponse is NOT Encodable
         var json: [String: Any] = [
-            "isSuccess": authenticationResponse.success,
+            "isSuccess": authenticationResponse.isSuccess,
             "error": authenticationResponse.error ?? NSNull(),
             "nameIdentifier": authenticationResponse.nameIdentifier ?? NSNull()
         ]
@@ -151,8 +151,8 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
         // Convert attributes to JSON array
         let attributesJson = authenticationResponse.attributes.map { attr in
             return [
-                "name": attr.name,
-                "value": attr.value
+                "name": attr,
+                "value": attr
             ]
         }
         json["attributes"] = attributesJson
