@@ -142,26 +142,40 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
         guard let command = currentCommand else { return }
 
         do{
+            // Manually build JSON dictionary
             var json: [String: Any] = [
-                "isSuccess": authenticationResponse.isSuccess,
-                "error": authenticationResponse.error as? String,
-                "nameIdentifier": authenticationResponse.nameIdentifier as? String
+                "isSuccess": authenticationResponse.success
             ]
 
-            // Convert attributes to JSON array
-            let attributesJson = authenticationResponse.attributes.map { attr in
-                return [
-                    "name": attr,
-                    "value": attr
-                ]
+            if let error = authenticationResponse.error {
+                json["error"] = error
+            } else {
+                json["error"] = NSNull()
+            }
+
+            if let nameId = authenticationResponse.nameIdentifier {
+                json["nameIdentifier"] = nameId
+            } else {
+                json["nameIdentifier"] = NSNull()
+            }
+
+            // Convert attributes
+            var attributesJson: [[String: Any]] = []
+            for attr in authenticationResponse.attributes {
+                attributesJson.append([
+                    "name": attr.name,
+                    "value": attr.value
+                ])
             }
             json["attributes"] = attributesJson
             NSLog("loginAppToApp handleResponse2");
-            // Convert dictionary to JSON string
-            let jsonData = try? JSONSerialization.data(withJSONObject: json, options: [])
-            let jsonString = jsonData.flatMap { String(data: $0, encoding: .utf8) } ?? "{}"
+            // Convert to JSON string safely
+            var jsonString = "{}"
+            if JSONSerialization.isValidJSONObject(json),
+            let data = try? JSONSerialization.data(withJSONObject: json, options: []) {
+                jsonString = String(data: data, encoding: .utf8) ?? "{}"
+            }
             NSLog("loginAppToApp " + jsonString);
-
             let pluginResult = CDVPluginResult(
                 status: CDVCommandStatus_OK,
                 messageAs: jsonString
@@ -169,7 +183,8 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
 
             self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
             self.currentCommand = nil
-        } catch{
+            
+        } catch {
             sendError(code:"E_HANDLE_RESPONSE_EXCEPTION", message:"Error handling login response: \(error)", callbackId: command.callbackId)
             return
         }
