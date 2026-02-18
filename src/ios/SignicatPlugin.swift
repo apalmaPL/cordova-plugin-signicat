@@ -172,7 +172,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
             self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
             self.currentCommand = nil
         } catch{
-            sendError(code:"E_HANDLE_RESPONSE_EXCEPTION", message:"Error handling login response: " \(error), callbackId: command.callbackId)
+            sendError(code:"E_HANDLE_RESPONSE_EXCEPTION", message:"Error handling login response: \(error)", callbackId: command.callbackId)
             return
         }
         
