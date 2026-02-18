@@ -160,7 +160,6 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
             NSLog("loginAppToApp handleResponse2");
             // Convert dictionary to JSON string
             let jsonData = try? JSONSerialization.data(withJSONObject: json, options: [])
-            NSLog("loginAppToApp jsonData " + jsonData);
             let jsonString = jsonData.flatMap { String(data: $0, encoding: .utf8) } ?? "{}"
             NSLog("loginAppToApp " + jsonString);
 
