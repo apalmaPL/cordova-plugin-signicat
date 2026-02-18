@@ -17,6 +17,18 @@ import com.connectis.sdk.api.authentication.Token;
 import org.jetbrains.annotations.NotNull;
 
 
+/*********************************************************************************
+The Android SDK is built with AndroidX. 
+This means that you must have an AndroidX application to use the Android SDK.
+The supported Android minimum version is Android 9 (API level 28). 
+The supported Android target version is Android 16 (API level 36).
+The SDK is made using Kotlin 1.9. If your app uses Kotlin, then we recommend that you use a language version that is the same (1.9) or newer.
+The target phone's default browser must support cookies. If not, then a browser that supports cookies must be set as default. 
+
+It includes the android-sdk-1.1.7.aar library.
+
+**********************************************************************************/
+
 public class SignicatPlugin extends CordovaPlugin {
 
     @Override
@@ -33,6 +45,22 @@ public class SignicatPlugin extends CordovaPlugin {
 
         return false;
     }
+
+
+    /**
+     * Requests a valid OpenID access token from the Signicat Identity Broker.
+     *
+     * This method initiates an SDK call that returns an OAuth2/OpenID access token
+     * previously obtained through a successful login. The token can be used to
+     * authorize calls to backend APIs that require a valid access credential.
+     *
+     * The AccessTokenDelegate provides two callbacks:
+     *   - handleAccessToken(Token accessToken): called when a valid token is available.
+     *   - onError(String exception): called when there was a problem obtaining
+     *     the token (e.g., expired session, internal error).
+     *
+     * Note: Treat the returned access token as a secret and keep it secure.
+     */
 
     private void getAccessToken(final CallbackContext callbackContext) {    
 
@@ -53,6 +81,29 @@ public class SignicatPlugin extends CordovaPlugin {
 
     }
 
+    /**
+     * Starts the authentication flow with the Signicat Identity Broker.
+     *
+     * This method uses ConnectisSDKConfiguration to launch either:
+     *   - a WEB login flow using an external browser,
+     *   - or an APP_TO_APP flow for DigID/App-to-app redirect authentication.
+     *
+     * After the user interacts with the broker (e.g., entering credentials,
+     * choosing an ID provider), the result is returned through:
+     *   - AuthenticationResponseDelegate.handleResponse(AuthenticationResponse):
+     *     called with a response object when authentication completes.
+     *   - AuthenticationResponseDelegate.onCancel():
+     *     called if the user cancels the login.
+     *
+     * If an error occurs during the login process (e.g., network error,
+     * invalid configuration), ErrorResponseDelegate.handleError(Exception e)
+     * is triggered with details of the failure.
+     *
+     * The response includes information such as:
+     *   - success status,
+     *   - unique name identifier,
+     *   - attributes returned by the identity provider (e.g., subject, amr).
+     */
 
     private void login(JSONArray args, CallbackContext callbackContext) {
 
@@ -80,6 +131,7 @@ public class SignicatPlugin extends CordovaPlugin {
 
         cordova.getActivity().runOnUiThread(() -> {
           try {
+
             ConnectisSDKConfiguration configuration = new ConnectisSDKConfiguration(
                 issuer,
                 clientId,
@@ -118,6 +170,7 @@ public class SignicatPlugin extends CordovaPlugin {
                 errorDelegate,
                 allowDeviceAuthentication
             );
+
           } catch (Exception e) {
             sendError(callbackContext, "E_LOGIN_EXCEPTION", e.getMessage());
           }
@@ -125,6 +178,26 @@ public class SignicatPlugin extends CordovaPlugin {
 
     }
 
+    /**
+     * Sends a structured error object back to the Cordova JavaScript layer.
+     *
+     * This method wraps an error code and message into a JSON object,
+     * then passes it to the Cordova CallbackContext as an error response. The
+     * resulting JSON has the following structure:
+     *
+     * {
+     *   "code": "<ERROR_CODE>",
+     *   "message": "<Human readable message>"
+     * }
+     *
+     * Using a consistent JSON error format allows the JavaScript side to reliably
+     * detect, classify, and handle plugin errors such as argument validation issues,
+     * SDK failures, login cancellations, or unexpected exceptions.
+     *
+     * @param ctx     The Cordova CallbackContext used to report the error.
+     * @param code    A short, machine-readable error code (e.g. "E_LOGIN_CONFIG").
+     * @param message A descriptive message providing additional context.
+     */
     
     private void sendError(CallbackContext ctx, String code, String message) {
         try {
