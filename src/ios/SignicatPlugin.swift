@@ -27,29 +27,6 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
         }
     }
 
-    func sendError(code: String, message: String, callbackId: String) {
-        let errorObj: [String: Any] = [
-            "code": code,
-            "message": message
-        ]
-
-        // Convert to JSON string safely
-        var jsonString = "{}"
-        if JSONSerialization.isValidJSONObject(errorObj),
-        let data = try? JSONSerialization.data(withJSONObject: errorObj, options: []) {
-            jsonString = String(data: data, encoding: .utf8) ?? "{}"
-        }
-
-        let pluginResult = CDVPluginResult(
-            status: CDVCommandStatus_ERROR,
-            messageAs: jsonString
-        )
-
-        self.commandDelegate.send(
-            pluginResult, 
-            callbackId: callbackId
-        )
-    }
 
     /**
     * Requests an OpenID Connect access token from the Signicat Identity Broker.
@@ -224,28 +201,56 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
     }
 
 
-    func showMessage(messageIn: String){
+    /**
+    * Sends a structured error response back to the Cordova layer.
+    *
+    * This helper method wraps an error code and message into a JSON object,
+    * serializes it into a JSON string, and returns it through a Cordova
+    * `CDVPluginResult` with `CDVCommandStatus_ERROR`.
+    *
+    * The JSON structure returned to JavaScript has the form:
+    * {
+    *   "code": "<error-code>",
+    *   "message": "<human-readable description>"
+    * }
+    *
+    * This method is used to standardize native iOS error reporting for:
+    *   • Login flow failures
+    *   • Access token retrieval errors
+    *   • Invalid arguments or configuration issues
+    *   • SDK-level exceptions from Signicat Mobile SDK
+    *
+    * On the JavaScript side, this allows consistent handling of all errors
+    * with predictable fields for logging or user-facing messages.
+    *
+    * - Parameters:
+    *   - code: A short machine-readable error identifier (e.g. `"LOGIN_FAILED"`).
+    *   - message: A descriptive human-readable explanation of the error.
+    *   - callbackId: The Cordova callback ID associated with the original request.
+    */
 
-        let toastController: UIAlertController =
-            UIAlertController(
-            title: "WOOOOW!",
-            message: messageIn,
-            preferredStyle: .alert
-            )
+    func sendError(code: String, message: String, callbackId: String) {
+        let errorObj: [String: Any] = [
+            "code": code,
+            "message": message
+        ]
 
-        toastController.addAction(UIAlertAction(
-            title: "OK", 
-            style: .default, 
-            handler: { _ in 
-                print("OK tap") 
-            }))
+        // Convert to JSON string safely
+        var jsonString = "{}"
+        if JSONSerialization.isValidJSONObject(errorObj),
+        let data = try? JSONSerialization.data(withJSONObject: errorObj, options: []) {
+            jsonString = String(data: data, encoding: .utf8) ?? "{}"
+        }
 
-        self.viewController?.present(
-            toastController,
-            animated: true,
-            completion: nil
+        let pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_ERROR,
+            messageAs: jsonString
         )
 
+        self.commandDelegate.send(
+            pluginResult, 
+            callbackId: callbackId
+        )
     }
 
 }
