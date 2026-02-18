@@ -68,7 +68,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
     func onError(errorMessage: String) {
         guard let callbackId = self.accessTokenCallbackId else { return }
 
-        sendError("E_ACCESS_TOKEN_EXCEPTION", errorMessage, callbackId: callbackId)
+        sendError(code:"E_ACCESS_TOKEN_EXCEPTION", message:errorMessage, callbackId: callbackId)
     }
 
 
@@ -108,7 +108,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
             let brokerDigidAppAcs = command.arguments[4] as? String,
             let isAppToApp = command.arguments[5] as? Bool
         else {
-            sendError("E_LOGIN_INVALID_ARGS", "Missing or invalid parameters", callbackId: command.callbackId)
+            sendError(code:"E_LOGIN_INVALID_ARGS", message:"Missing or invalid parameters", callbackId: command.callbackId)
             return
         }
 
@@ -123,7 +123,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
                 loginFlow: isAppToApp ? LoginFlow.APP_TO_APP : LoginFlow.WEB
             )
         } catch {
-            sendError("E_LOGIN_CONFIG", "Invalid login configuration: \(error.localizedDescription)", callbackId: command.callbackId)
+            sendError(code:"E_LOGIN_CONFIG", message:"Invalid login configuration: \(error.localizedDescription)", callbackId: command.callbackId)
             return
         }
 
@@ -177,7 +177,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
     func onCancel() {
         guard let command = currentCommand else { return }
 
-        sendError("E_LOGIN_CANCELED", "User canceled login", callbackId: command.callbackId)
+        sendError(code:"E_LOGIN_CANCELED", message:"User canceled login", callbackId: command.callbackId)
 
         self.currentCommand = nil
     }
