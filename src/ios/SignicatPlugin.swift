@@ -138,7 +138,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
 
 
     func handleResponse(authenticationResponse: AuthenticationResponse) {
-
+        NSLog("loginAppToApp handleResponse");
         guard let command = currentCommand else { return }
 
         // Build JSON manually since AuthenticationResponse is NOT Encodable
@@ -156,11 +156,11 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
             ]
         }
         json["attributes"] = attributesJson
-
+        NSLog("loginAppToApp handleResponse2");
         // Convert dictionary to JSON string
         let jsonData = try? JSONSerialization.data(withJSONObject: json, options: [])
         let jsonString = jsonData.flatMap { String(data: $0, encoding: .utf8) } ?? "{}"
-
+        NSLog("loginAppToApp " + jsonString);
         showMessage(messageIn: jsonString)
 
         let pluginResult = CDVPluginResult(
