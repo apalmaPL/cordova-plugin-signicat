@@ -142,11 +142,10 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
         guard let command = currentCommand else { return }
 
         do{
-            // Build JSON manually since AuthenticationResponse is NOT Encodable
             var json: [String: Any] = [
                 "isSuccess": authenticationResponse.isSuccess,
-                "error": authenticationResponse.error ?? NSNull(),
-                "nameIdentifier": authenticationResponse.nameIdentifier ?? NSNull()
+                "error": authenticationResponse.error as? String,
+                "nameIdentifier": authenticationResponse.nameIdentifier as? String
             ]
 
             // Convert attributes to JSON array
