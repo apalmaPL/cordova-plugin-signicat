@@ -161,6 +161,8 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
         let jsonData = try? JSONSerialization.data(withJSONObject: json, options: [])
         let jsonString = jsonData.flatMap { String(data: $0, encoding: .utf8) } ?? "{}"
 
+        showMessage(messageIn: jsonString)
+
         let pluginResult = CDVPluginResult(
             status: CDVCommandStatus_OK,
             messageAs: jsonString
