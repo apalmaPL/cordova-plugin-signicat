@@ -45,7 +45,10 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
             messageAs: jsonString
         )
 
-        self.commandDelegate.send(pluginResult, callbackId: callbackId)
+        self.commandDelegate.send(
+            pluginResult, 
+            callbackId: callbackId
+        )
     }
 
     /**
@@ -86,7 +89,8 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
     }
 
     func onError(errorMessage: String) {
-        sendError(code:"E_ACCESS_TOKEN_EXCEPTION", message:errorMessage, callbackId: self.accessTokenCallbackId)
+        guard let callbackId = self.accessTokenCallbackId else { return }
+        sendError(code:"E_ACCESS_TOKEN_EXCEPTION", message:errorMessage, callbackId: callbackId)
     }
 
 
