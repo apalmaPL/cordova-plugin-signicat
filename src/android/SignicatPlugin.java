@@ -18,15 +18,15 @@ import org.jetbrains.annotations.NotNull;
 
 
 /*********************************************************************************
-The Android SDK is built with AndroidX. 
-This means that you must have an AndroidX application to use the Android SDK.
-The supported Android minimum version is Android 9 (API level 28). 
-The supported Android target version is Android 16 (API level 36).
-The SDK is made using Kotlin 1.9. If your app uses Kotlin, then we recommend that you use a language version that is the same (1.9) or newer.
-The target phone's default browser must support cookies. If not, then a browser that supports cookies must be set as default. 
-
-It includes the android-sdk-1.1.7.aar library.
-
+ * The Android SDK is built with AndroidX. 
+ * This means that you must have an AndroidX application to use the Android SDK.
+ * The supported Android minimum version is Android 9 (API level 28). 
+ * The supported Android target version is Android 16 (API level 36).
+ * The SDK is made using Kotlin 1.9. If your app uses Kotlin, then we recommend that you use a language version that is the same (1.9) or newer.
+ * The target phone's default browser must support cookies. If not, then a browser that supports cookies must be set as default. 
+ * 
+ * It includes the android-sdk-1.1.7.aar library.
+ * 
 **********************************************************************************/
 
 public class SignicatPlugin extends CordovaPlugin {
