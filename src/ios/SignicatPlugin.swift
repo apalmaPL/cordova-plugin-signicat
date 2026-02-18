@@ -182,7 +182,7 @@ class SignicatPlugin: CDVPlugin, AuthenticationResponseDelegate, AccessTokenDele
 
 
 
-    func sendError(_ code: String, _ message: String, callbackId: String) {
+    func sendError(code: String, message: String, callbackId: String) {
         let errorObj: [String: Any] = [
             "code": code,
             "message": message
